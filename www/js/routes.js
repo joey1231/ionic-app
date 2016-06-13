@@ -10,18 +10,34 @@ angular.module('app.routes', [])
     
   
 
-      .state('tabsController.cameraTabDefaultPage', {
-    url: '/page2',
+      .state('tabsController', {
+    url: '/page1',
+    templateUrl: 'templates/tabsController.html',
+    abstract:true
+  })
+
+  .state('tabsController.setting', {
+    url: '/page7',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/setting.html',
+        controller: 'settingCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.inbox', {
+    url: '/page8',
     views: {
       'tab1': {
-        templateUrl: 'templates/cameraTabDefaultPage.html',
-        controller: 'cameraTabDefaultPageCtrl'
+        templateUrl: 'templates/inbox.html',
+        controller: 'inboxCtrl'
       }
     }
   })
 
   .state('tabsController.contacts', {
-    url: '/page3',
+    url: '/page9',
     views: {
       'tab2': {
         templateUrl: 'templates/contacts.html',
@@ -30,49 +46,49 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('tabsController.cloudTabDefaultPage', {
-    url: '/page4',
+  .state('tabsController.profile', {
+    url: '/page10',
     views: {
       'tab3': {
-        templateUrl: 'templates/cloudTabDefaultPage.html',
-        controller: 'cloudTabDefaultPageCtrl'
+        templateUrl: 'templates/profile.html',
+        controller: 'profileCtrl'
       }
     }
   })
 
-  .state('tabsController', {
-    url: '/page1',
-    templateUrl: 'templates/tabsController.html',
-    abstract:true
-  })
-
-  .state('tabsController.tab4DefaultPage', {
-    url: '/page5',
+  .state('tabsController.messages', {
+    url: '/page11',
     views: {
-      'tab4': {
-        templateUrl: 'templates/tab4DefaultPage.html',
-        controller: 'tab4DefaultPageCtrl'
+      'tab1': {
+        templateUrl: 'templates/messages.html',
+        controller: 'messagesCtrl'
       }
     }
   })
 
-  .state('tabsController.aDDCONTACT', {
-    url: '/addcontact',
+  .state('tabsController.newContact', {
+    url: '/page12',
     views: {
       'tab2': {
-        templateUrl: 'templates/aDDCONTACT.html',
-        controller: 'aDDCONTACTCtrl'
+        templateUrl: 'templates/newContact.html',
+        controller: 'newContactCtrl'
       }
     }
   })
 
   .state('login', {
-    url: '/page8',
+    url: '/page13',
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
 
-$urlRouterProvider.otherwise('/page8')
+  .state('signup', {
+    url: '/page14',
+    templateUrl: 'templates/signup.html',
+    controller: 'signupCtrl'
+  })
+
+$urlRouterProvider.otherwise('/page13')
 
   
 

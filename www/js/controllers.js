@@ -1,6 +1,10 @@
 angular.module('app.controllers', [])
-  
-.controller('cameraTabDefaultPageCtrl', function($scope) {
+     
+.controller('settingCtrl', function($scope) {
+
+})
+   
+.controller('inboxCtrl', function($scope) {
 
 })
    
@@ -8,19 +12,23 @@ angular.module('app.controllers', [])
 
 })
    
-.controller('cloudTabDefaultPageCtrl', function($scope) {
-
-})
-      
-.controller('tab4DefaultPageCtrl', function($scope) {
+.controller('profileCtrl', function($scope) {
 
 })
    
-.controller('aDDCONTACTCtrl', function($scope) {
+.controller('messagesCtrl', function($scope) {
+
+})
+   
+.controller('newContactCtrl', function($scope) {
 
 })
    
 .controller('loginCtrl', function($scope) {
-  
+
+})
+   
+.controller('signupCtrl', function($scope) {
+
 })
  
