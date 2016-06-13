@@ -11,22 +11,12 @@
             </div>
         </form>
         <ion-list id="contacts-list2" class=" ">
-            <ion-item class="item-avatar  " id="contacts-list-item9">
-                <h2>Joey Dingcong</h2>
-                <p>+12345678912</p>
+
+            <ion-item class="item-avatar  " id="contacts-list-item9" ng-repeat="contact in contacts">
+                <h2>{{contact.name}}</h2>
+                <p>{{contact.cellphone}}</p>
             </ion-item>
-            <ion-item class="item-avatar  " id="contacts-list-item18">
-                <h2>Anoosh Roozrokh</h2>
-                <p>+12345678912</p>
-            </ion-item>
-            <ion-item class="item-avatar  " id="contacts-list-item19">
-                <h2>Dillon CEO</h2>
-                <p>+12345678912</p>
-            </ion-item>
-            <ion-item class="item-avatar  " id="contacts-list-item20">
-                <h2>Mark Kevin Besinga</h2>
-                <p>+12345678912</p>
-            </ion-item>
+
         </ion-list>
     </ion-content>
 </ion-view>
