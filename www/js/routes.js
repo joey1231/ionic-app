@@ -81,13 +81,19 @@ angular.module('app.routes', [])
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
-
+  
   .state('signup', {
     url: '/page14',
     templateUrl: 'templates/signup.html',
     controller: 'signupCtrl'
   })
+      .state('contact-edit',{
+        url: '/contact/edit/:id',
 
+            templateUrl: 'templates/editContact.html',
+            controller: 'contactsCtrl'
+        
+      })
 $urlRouterProvider.otherwise('/login')
 
   
