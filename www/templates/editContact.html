@@ -1,0 +1,67 @@
+<ion-view title="Edit Contact"  ng-init="editInit()">
+
+    <ion-content padding="true" class="has-header">
+        <div id="newContact-button-bar4" class=" button-bar ">
+            <button id="newContact-button14" class=" button button-dark  button-block " ng-click="cancel()">Back</button>
+            <button id="newContact-button14" class=" button button-calm  button-block " ng-click="sendSMS()">Send SMS</button>
+            <button id="newContact-button15" class=" button button-assertive button-block " ng-click="deleteContact()">Delete</button>
+        </div>
+        <form id="newContact-form7" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider6">Contact Information</ion-item>
+            <label class="item item-input " id="newContact-input13">
+                <span class="input-label">Name</span>
+                <input type="text" placeholder="" ng-model="contact.name">
+            </label>
+            <label class="item item-input " id="newContact-input14">
+                <span class="input-label">Number</span>
+                <input type="tel" placeholder="" ng-model="contact.cellphone">
+            </label>
+        </form>
+        <form id="newContact-form8" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider7">Advance Options (Optional)</ion-item>
+            <label class="item item-input " id="newContact-input16">
+                <span class="input-label">Keyword</span>
+                <input type="text" placeholder="" ng-model="contact.keyword">
+            </label>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="contact.block" ng-change="toggleChange()">Blocked</ion-toggle>
+            <label class="item item-input " id="newContact-input17">
+                <span class="input-label">Email</span>
+                <input type="email" placeholder="" ng-model="contact.email">
+            </label>
+            <label class="item item-input " id="newContact-input18">
+                <span class="input-label">Twitter</span>
+                <input type="text" placeholder="" ng-model="contact.twitter">
+            </label>
+        </form>
+
+        <form id="newContact-form9" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider8">Address (Optional)</ion-item>
+            <label class="item item-input " id="newContact-input20">
+                <span class="input-label">Street</span>
+                <input type="text" placeholder="" ng-model="contact.street">
+            </label>
+            <label class="item item-input " id="newContact-input21">
+                <span class="input-label">City</span>
+                <input type="text" placeholder="" ng-model="contact.city">
+            </label>
+            <label class="item item-select " id="newContact-select1">
+                <span class="input-label">State</span>
+                <select class="" ng-model="contact.state">
+                    <option ng-repeat="state in state_array">{{state}}</option>
+                </select>
+            </label>
+            <label class="item item-input " id="newContact-input22">
+                <span class="input-label">Country</span>
+                <input type="text" placeholder="" ng-model="contact.country">
+            </label>
+            <label class="item item-input " id="newContact-input23">
+                <span class="input-label">Zipcode</span>
+                <input type="text" placeholder="" ng-model="contact.zipcode">
+            </label>
+            <div id="newContact-button-bar4" class=" button-bar ">
+                <button id="newContact-button14" class=" button button-stable  button-block " ng-click="cancel()">Cancel</button>
+                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="updateContact()">Save</button>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
