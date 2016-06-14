@@ -14,8 +14,13 @@
             <div > 
                 <div class="chat-bubble {{ (messages.direction == 2) ? 'right': 'left'}}">
 
-                    <div class="message"  autolinker>
+                    <div class="message" autolinker>
                       {{messages.body}}
+                      <ul>
+                        <li ng-repeat="attachment in attachments(messages.attachments)">
+                          <a href="{{ attachment.file }}" target="_blank"><img src="{{ attachment.file }}" class="attachment-img"></a>
+                        </li>
+                      </ul>
                     </div>
 
                     <div class="message-detail">

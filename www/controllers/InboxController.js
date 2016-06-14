@@ -37,11 +37,17 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl) {
 				title += d + ", ";
 			});
 			
-			$scope.title = title.substring(0, title.length - 2)
+			$scope.title = title.substring(0, title.length - 2);
+			console.log($scope.conversations);
 		});
 
 
+
 	}
+
+	$scope.attachments = function(attachments) {
+        return angular.fromJson(attachments);
+    }
 
 	$scope.getRecipients = function(recipient) {
 		// if (typeof x != 'undefined' && x instanceof Array)
