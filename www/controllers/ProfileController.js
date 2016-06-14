@@ -1,0 +1,3 @@
+controllers.profileCtrl = function($scope) {
+	
+}

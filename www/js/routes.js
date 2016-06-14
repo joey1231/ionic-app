@@ -71,7 +71,7 @@ angular.module('app.routes', [])
     views: {
       'tab2': {
         templateUrl: 'templates/newContact.html',
-        controller: 'newContactCtrl'
+        controller: 'contactsCtrl'
       }
     }
   })

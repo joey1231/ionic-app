@@ -1,0 +1,3 @@
+controllers.messagesCtrl = function($scope) {
+	
+}
