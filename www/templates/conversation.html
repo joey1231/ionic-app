@@ -1,4 +1,4 @@
-<ion-view id="userMessagesView" cache-view="false" view-title="conversation">
+<ion-view id="userMessagesView" cache-view="false" view-title="{{ title }}" ng-init="converstaion()">
     
     <div class="loader-center" ng-if="!doneLoading">
         <div class="loader">
@@ -8,51 +8,27 @@
 
     <ion-content has-bouncing="true" class="has-header has-footer" 
               delegate-handle="userMessageScroll">
-        <div class="message-wrapper">
+        <div class="message-wrapper" ng-repeat="messages in conversations">
 
 
             <div > 
-                  <div class="chat-bubble left">
-  
-                      <div class="message"  autolinker>
-                        Yow
-                      </div>
-  
-                      <div class="message-detail">
-                          <span ng-click="viewProfile(message)" 
-                              class="bold">detail</span>
-                      </div>
-  
-                  </div>
-              </div>
+                <div class="chat-bubble {{ (messages.direction == 2) ? 'right': 'left'}}">
+
+                    <div class="message"  autolinker>
+                      {{messages.body}}
+                    </div>
+
+                    <div class="message-detail">
+                        <!-- <span ng-click="viewProfile(message)" 
+                            class="bold">detail</span> -->
+                        <span am-time-ago="messages.created_at"></span>
+                    </div>
+
+                </div>
+            </div>
 
 
             <div class="cf"></div>
-
-
-
-              <div>
-                    
-                
-                  <div class="chat-bubble right">
-  
-                      <div class="message" autolinker>
-                      hey
-                      </div>
-  
-                      <div class="message-detail">
-                          <span ng-click="viewProfile(message)" 
-                              class="bold">detail</span>
-                      </div>
-  
-                  </div>
-                
-              </div>
-
-                  <div class="cf"></div>
-
-
-                  
         </div>
     </ion-content>
 
