@@ -17,11 +17,6 @@ controllers.inboxCtrl = function($scope, $http, baseUrl) {
 
 	$scope.inbox();
 
-
-	$scope.conversation = function(thread_key) {
-		
-	}
-
 	$scope.getRecipients = function(recipient) {
 		// if (typeof x != 'undefined' && x instanceof Array)
 		

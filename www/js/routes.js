@@ -27,10 +27,20 @@ angular.module('app.routes', [])
   })
 
   .state('tabsController.inbox', {
-    url: '/page8',
+    url: '/inbox',
     views: {
       'tab1': {
         templateUrl: 'templates/inbox.html',
+        controller: 'inboxCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.conversation', {
+    url: '/conversation/:thread_key',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/conversation.html',
         controller: 'inboxCtrl'
       }
     }

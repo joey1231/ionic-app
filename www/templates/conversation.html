@@ -1,0 +1,71 @@
+<ion-view id="userMessagesView" cache-view="false" view-title="conversation">
+    
+    <div class="loader-center" ng-if="!doneLoading">
+        <div class="loader">
+          <i class="icon ion-loading-c"></i>
+        </div>
+    </div>
+
+    <ion-content has-bouncing="true" class="has-header has-footer" 
+              delegate-handle="userMessageScroll">
+        <div class="message-wrapper">
+
+
+            <div > 
+                  <div class="chat-bubble left">
+  
+                      <div class="message"  autolinker>
+                        Yow
+                      </div>
+  
+                      <div class="message-detail">
+                          <span ng-click="viewProfile(message)" 
+                              class="bold">detail</span>
+                      </div>
+  
+                  </div>
+              </div>
+
+
+            <div class="cf"></div>
+
+
+
+              <div>
+                    
+                
+                  <div class="chat-bubble right">
+  
+                      <div class="message" autolinker>
+                      hey
+                      </div>
+  
+                      <div class="message-detail">
+                          <span ng-click="viewProfile(message)" 
+                              class="bold">detail</span>
+                      </div>
+  
+                  </div>
+                
+              </div>
+
+                  <div class="cf"></div>
+
+
+                  
+        </div>
+    </ion-content>
+
+    <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
+              <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+                  <label class="item-input-wrapper">
+                      <textarea ng-model="input.message" value="" placeholder="Send {{toUser.username}} a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+                  </label>
+                  <div class="footer-btn-wrap">
+                    <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+                        ng-disabled="!input.message || input.message === ''">
+                    </button>
+                  </div>
+              </ion-footer-bar>
+          </form>
+</ion-view>

@@ -2,7 +2,7 @@
     <ion-content padding="true" class="has-header">
         <a ui-sref="tabsController.messages" id="inbox-button11" class=" button button-positive  button-block icon-right ion-compose ">New Message</a>
         <ion-list id="inbox-list1" class=" ">
-            <ion-item ng-repeat="thread in inbox" class="item-icon-right positive  " ng-click="conversation(thread.thread_key)" id="inbox-list-item{{ thread.id }}">
+            <ion-item ng-repeat="thread in inbox" class="item-icon-right positive  " ui-sref="tabsController.conversation({thread_key: thread.thread_key})" id="inbox-list-item{{ thread.id }}">
             <span class="inbox-thread-time">10:15</span>
             {{ thread.body }}
                 <span class="item-note inbox-thread-recipient">
