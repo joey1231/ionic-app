@@ -1,0 +1,3 @@
+controllers.inboxCtrl = function($scope) {
+	
+}

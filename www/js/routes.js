@@ -37,7 +37,7 @@ angular.module('app.routes', [])
   })
 
   .state('tabsController.contacts', {
-    url: '/page9',
+    url: '/contacts',
     views: {
       'tab2': {
         templateUrl: 'templates/contacts.html',
@@ -71,13 +71,13 @@ angular.module('app.routes', [])
     views: {
       'tab2': {
         templateUrl: 'templates/newContact.html',
-        controller: 'newContactCtrl'
+        controller: 'contactsCtrl'
       }
     }
   })
 
   .state('login', {
-    url: '/page13',
+    url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
@@ -88,7 +88,7 @@ angular.module('app.routes', [])
     controller: 'signupCtrl'
   })
 
-$urlRouterProvider.otherwise('/page13')
+$urlRouterProvider.otherwise('/login')
 
   
 
