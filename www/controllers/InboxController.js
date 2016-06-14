@@ -16,4 +16,33 @@ controllers.inboxCtrl = function($scope, $http, baseUrl) {
 	}
 
 	$scope.inbox();
+
+
+	$scope.conversation = function(thread_key) {
+		
+	}
+
+	$scope.getRecipients = function(recipient) {
+		// if (typeof x != 'undefined' && x instanceof Array)
+		
+		var recipients = [];
+		angular.forEach(recipient, function(data, key) {
+			if (key == 'contacts') {
+				angular.forEach(data, function(d, k) {
+					recipients.push(d.name);
+				});
+			} else if (key == 'groups') {
+				angular.forEach(data, function(d, k) {
+					recipients.push(d.name);
+				});
+			}
+		});
+
+		return recipients;
+	}
+
+	$scope.toggleStar = function() {
+		console.log("not yet implemented");
+	}
+
 }
