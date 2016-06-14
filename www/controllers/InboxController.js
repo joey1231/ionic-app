@@ -8,8 +8,7 @@ controllers.inboxCtrl = function($scope, $http, baseUrl) {
 		$http.get(baseUrl + '/communication/inbox', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
             
             if (status == 200) {
-                console.log(data);
-            	console.log($scope.user.id);
+                $scope.inbox = data;
             } else {
                 //alert("Something went wrong!");
             }
