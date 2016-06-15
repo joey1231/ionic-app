@@ -1,4 +1,4 @@
-controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send) {
+controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $timeout, $ionicScrollDelegate) {
 
 	/**
 	 * get the user token 
@@ -41,6 +41,8 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send) {
 	 */
 	$scope.converstaion = function() {
 
+		var viewScroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
+
 		// conversation new array
 		$scope.conversations = new Array();
 
@@ -60,6 +62,10 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send) {
 			
 			// conversation title from recipient
 			$scope.title = title.substring(0, title.length - 2);
+
+			$timeout(function() {
+	          viewScroll.scrollBottom();
+	        }, 0);
 		});
 	}
 

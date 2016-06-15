@@ -45,7 +45,6 @@ angular.module('app.services', [])
     this.sendNormal = function (url, data, $scope, flag) {
         // check if the body of message not empty or attachment
         if (($scope.body != '' && typeof $scope.body != 'undefined') || $scope.attachments.length > 0) {
-            angular.element(document.querySelector('#sendbtn')).html('Sending..');
             $scope.message.enabled = false;
             $scope.error = false;
             try {
@@ -64,14 +63,16 @@ angular.module('app.services', [])
                         $scope.attachments = new Array();
                         $scope.body = '';
                         $scope.scheduled_at = null;
+
+                        $scope.converstaion();
                     }
-                    angular.element(document.querySelector('#sendbtn')).html('Send');
+
                     $scope.message.enabled = true;
+
                 }).error(function (data, status, header, config) {
                     var error = '';
                     if (status == 202 || status == 401) {
 
-                        angular.element(document.querySelector('.error-send' + (flag == false ? 's' : ''))).append(data.message + "<br/>");
                         $scope.error = true;
                     }
                     $scope.attachments = new Array();
