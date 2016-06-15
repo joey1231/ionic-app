@@ -69,6 +69,10 @@ img.profile-pic.right {
   width: 100% !important;
 }
 
+.bar.item-input-inset .item-input-wrapper textarea {
+    width: 100% !important;
+}
+
 .message-wrapper {
   position: relative;
 }
@@ -197,5 +201,6 @@ a.autolinker {
 
 
 img.attachment-img {
-  max-width: 300px;
+    position: relative;
+  max-width: 100%;
 }
