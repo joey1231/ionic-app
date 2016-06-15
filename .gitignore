@@ -4,4 +4,8 @@
 node_modules/
 platforms/
 plugins/
-css/
+bin/
+.vs/
+smsvoip-ionic-app.jsproj
+smsvoip-ionic-app.sln
+smsvoip-ionic-app.jsproj.user
