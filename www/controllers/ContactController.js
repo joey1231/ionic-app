@@ -138,5 +138,38 @@ controllers.contactsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicP
     $scope.cancel = function(){
         $state.go('tabsController.contacts');
     }
+
+    $scope.attachContactById = function($id){
+        $scope.contact = $scope.contacts[$id];
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Attach Contact',
+            template: 'Are you sure you want to attach this contact?'
+        });
+
+        confirmPopup.then(function(res) {
+            if(res) {
+                $http.post(baseUrl + "/group/attach",
+                    {group_id:$stateParams.id, contact_id: $scope.contact.id,userid:$scope.user.id}
+                ).success(function (data, status, header) {
+                   if(status != 200){
+                       var alertPopup = $ionicPopup.alert({
+                           title: 'Attach new contact failed',
+                           template: data.message
+                       });
+                   }else{
+                       var alertPopup = $ionicPopup.alert({
+                           title: 'Attach new contact success',
+                           template: data.message
+                       });
+                   }
+                });
+            } else {
+
+            }
+        });
+    }
+    $scope.cancelGroup =function () {
+        $state.go('viewGroups',{id:$stateParams.id});
+    }
 }
 
