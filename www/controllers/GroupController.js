@@ -27,10 +27,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         keywords:'',
         userid:  $scope.user.id,
     };
-    $scope.toggleChange=function(){
-        // $scope.contact.block = $scope.contact.block == 0 ? 1 : 0;
-        console.log($scope.contact.block);
-    }
+  
     $scope.addGroup=function(){
         if( $scope.group.text_join_enabled){
             $scope.group.text_join_enable=1;
@@ -79,26 +76,6 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
 
             }
         });
-    }
-
-    $scope.updateContact= function(){
-        $http.put(baseUrl + '/contact/' + $stateParams.id,$scope.contact).success(function (data, status, headers, config) {
-
-            if (status == 200) {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Update new contact successful',
-                    template: data.message
-                });
-                $state.go('tabsController.contacts');
-
-            } else if (status == 202) {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Update new contact failed',
-                    template: data.message
-                });
-
-            }
-        })
     }
 
     $scope.deleteGroup= function(){
