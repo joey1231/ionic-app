@@ -1,5 +1,11 @@
-<ion-view title="New Contact" id="page12" class=" ">
+<ion-view title="Edit Contact"  ng-init="editInit()">
+
     <ion-content padding="true" class="has-header">
+        <div id="newContact-button-bar4" class=" button-bar ">
+            <button id="newContact-button14" class=" button button-dark  button-block " ng-click="cancel()">Back</button>
+            <button id="newContact-button14" class=" button button-calm  button-block " ng-click="sendSMS()">Send SMS</button>
+            <button id="newContact-button15" class=" button button-assertive button-block " ng-click="deleteContact()">Delete</button>
+        </div>
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Contact Information</ion-item>
             <label class="item item-input " id="newContact-input13">
@@ -53,8 +59,8 @@
                 <input type="text" placeholder="" ng-model="contact.zipcode">
             </label>
             <div id="newContact-button-bar4" class=" button-bar ">
-                <button id="newContact-button14" class=" button button-calm  button-block " ng-click="cancel()">Cancel</button>
-                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="addContact()">Save</button>
+                <button id="newContact-button14" class=" button button-stable  button-block " ng-click="cancel()">Cancel</button>
+                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="updateContact()">Save</button>
             </div>
         </form>
     </ion-content>

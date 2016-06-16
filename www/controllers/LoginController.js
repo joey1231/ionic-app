@@ -1,4 +1,4 @@
-controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup,$state, LoginService) {    
+controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup,$state, LoginService, $location) {
 
     $scope.credentials = {
       email:'',
