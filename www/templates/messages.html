@@ -3,12 +3,12 @@
         <form id="messages-form6" class="list ">
             <label class="item item-input " id="messages-input10">
                 <span class="input-label">Number:</span>
-                <input type="tel" placeholder="">
+                <input type="tel" placeholder="" ng-model="message.number">
             </label>
             <label class="item item-input " id="messages-textarea8">
-                <span class="input-label">Message</span><textarea placeholder=""></textarea>
+                <span class="input-label">Message</span><textarea placeholder="" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
             </label>
         </form>
-        <button id="messages-button6" class=" button button-positive  button-block icon-right ion-android-send ">Send</button>
+        <button id="messages-button6" class=" button button-positive  button-block icon-right ion-android-send " ng-disabled="sendStatus=='sending'" ng-click="send(message)">Send</button>
     </ion-content>
 </ion-view>

@@ -42,6 +42,16 @@ angular.module('app.services', [])
 
     }])
     .service('send', ['$http', function ($http) {
+    this.sendSingle = function(url, message, $scope, $state) {
+        
+
+        $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number]}).success(function(data, status, header) {
+            if (status == 200) {
+                $scope.sendStatus = "sent";
+                $state.go('tabsController.inbox');
+            }
+        });
+    }
     this.sendNormal = function (url, data, $scope, flag) {
         // check if the body of message not empty or attachment
         if (($scope.body != '' && typeof $scope.body != 'undefined') || $scope.attachments.length > 0) {
@@ -64,10 +74,11 @@ angular.module('app.services', [])
                         $scope.body = '';
                         $scope.scheduled_at = null;
 
+                        $scope.message.enabled = true;
                         $scope.converstaion();
                     }
 
-                    $scope.message.enabled = true;
+                    
 
                 }).error(function (data, status, header, config) {
                     var error = '';
