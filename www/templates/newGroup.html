@@ -1,0 +1,27 @@
+<ion-view title="New Group" id="newGroup" class=" ">
+    <ion-content padding="true" class="has-header">
+        <form id="newContact-form7" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider6">Group Information</ion-item>
+            <label class="item item-input " id="newContact-input13">
+                <span class="input-label">Name</span>
+                <input type="text" placeholder="" ng-model="group.name" >
+            </label>
+            <label class="item item-input " id="newContact-input14">
+                <span class="input-label">Triggering Keyword</span>
+                <input type="tel" placeholder="" ng-model="group.keywords" ng-enabled="group.text_join_enable">
+            </label>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="group.text_join_enabled" ng-change="toggleChange()">
+                Enable Text to Join
+            </ion-toggle>
+            <label class="item item-input " id="newContact-input16">
+                <span class="input-label">Reply with text when joining the group </span>
+                <input type="text" placeholder="" ng-model="group.join_message" ng-enabled="group.text_join_enable">
+            </label>
+            <div id="newContact-button-bar4" class=" button-bar ">
+                <button id="newContact-button14" class=" button button-calm  button-block " ng-click="cancel()">Cancel</button>
+                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="addGroup()">Save</button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

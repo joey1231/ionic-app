@@ -2,37 +2,16 @@
     <ion-content padding="true" class="has-header">
         <a ui-sref="tabsController.messages" id="inbox-button11" class=" button button-positive  button-block icon-right ion-compose ">New Message</a>
         <ion-list id="inbox-list1" class=" ">
-            <ion-item class="item-icon-right positive  " id="inbox-list-item8">Hey Mark.
-                <span class="item-note">Anoosh Roozrokh 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right  " id="inbox-list-item10">Good Morning.
-                <span class="item-note">Dillon 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right  " id="inbox-list-item11">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right positive  " id="inbox-list-item12">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right  " id="inbox-list-item13">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right  " id="inbox-list-item14">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right  " id="inbox-list-item15">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
-            </ion-item>
-            <ion-item class="item-icon-right positive  " id="inbox-list-item16">Hey Joey.
-                <span class="item-note">+1234569875 10:15</span>
-                <i class="icon ion-android-star-outline"></i>
+            <ion-item ng-repeat="thread in inbox" class="item-icon-right positive  " ui-sref="tabsController.conversation({thread_key: thread.thread_key})" id="inbox-list-item{{ thread.id }}">
+            <span class="inbox-thread-time">10:15</span>
+            {{ thread.body }}
+                <span class="item-note inbox-thread-recipient">
+                    <span ng-repeat="recipient in getRecipients(thread.recipients)">
+                        {{recipient}}
+                    </span>
+                </span>
+
+                <i class="icon ion-android-star-outline" ng-click="toggleStar()"></i>
             </ion-item>
         </ion-list>
     </ion-content>

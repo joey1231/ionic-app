@@ -1,4 +1,4 @@
-controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup,$state, LoginService) {    
+controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup,$state, LoginService, $location) {
 
     $scope.credentials = {
       email:'',
@@ -11,7 +11,7 @@ controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPop
     };
     $scope.login = function(){
         LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data) {
-            $state.go('tabsController.contacts');
+            $state.go('tabsController.inbox');
         }).error(function(data) {
 
             var alertPopup = $ionicPopup.alert({

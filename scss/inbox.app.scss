@@ -1,0 +1,17 @@
+.inbox-thread-time {
+	color: #aaa;
+	font-size: 10px;
+}
+
+.inbox-thread-recipient {
+	max-width: 250px;
+	overflow: hidden;
+
+	span:after {
+		content: ", ";
+	}
+
+	span:last-child:after {
+		content: "";
+	}
+}

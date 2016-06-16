@@ -2,9 +2,17 @@
   "name": "ionic-sample",
   "app_id": "",
   "proxies": [
-      {
-        "path": "/ionic",
-        "proxyUrl": "http://smsvoip.app/ionic"
-      }
-     ]
+    {
+      "path": "/ionic",
+      "proxyUrl": "http://smsvoip.app/ionic"
+    }
+  ],
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

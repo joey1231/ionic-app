@@ -1,4 +1,4 @@
-<ion-view title="Contacts" id="page9" class=" ">
+<ion-view title="Contacts" id="page9" class=" " ng-init="init()" cache-view="false">
     <ion-content padding="true" class="has-header">
         <form id="contacts-form2" class="list ">
             <label class="item item-input">
@@ -6,16 +6,39 @@
                 <input type="search" placeholder="">
             </label>
             <div id="contacts-button-bar2" class=" button-bar ">
-                <a ui-sref="tabsController.newContact" id="contacts-button4" class=" button button-positive  button-block icon ion-android-person-add "></a>
-                <button id="contacts-button5" class=" button button-positive  button-block icon ion-ios-download-outline "></button>
+                <a ui-sref="tabsController.newContact" id="contacts-button4"
+                   class=" button button-positive  button-block icon ion-android-person-add "></a>
+                <button id="contacts-button5"
+                        class=" button button-positive  button-block icon ion-ios-download-outline "></button>
             </div>
         </form>
+
         <ion-list id="contacts-list2" class=" ">
 
-            <ion-item class="item-avatar  " id="contacts-list-item9" ng-repeat="contact in contacts">
-                <h2>{{contact.name}}</h2>
-                <p>{{contact.cellphone}}</p>
-            </ion-item>
+
+
+                <ion-item class="item-avatar  " ng-repeat="contact in contacts"  id="contacts-list-item9">
+                    <div class="row">
+                        <div class="col col-75">
+                            <h2>{{contact.name}}</h2>
+                            <p>{{contact.cellphone}}</p>
+                        </div>
+                        <div class="col  col-25">
+
+                            <button class="button button-positive">
+                                <i class="icon ion-android-textsms"></i>
+                            </button>
+                            <a class="button button-assertive" ui-sref="contact-edit({id: {{contact.id}} })">
+                                <i class="icon ion-edit"></i>
+                            </a>
+                            <button  class="button button-assertive" ng-click="deleteContactById($index)">
+                                <i class="icon ion-close"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </ion-item>
+
 
         </ion-list>
     </ion-content>

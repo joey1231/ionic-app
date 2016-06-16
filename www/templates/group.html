@@ -1,0 +1,34 @@
+<ion-view title="Groups"  id="groups" class=" " ng-init="init()" cache-view="false">
+    <ion-content padding="true" class="has-header">
+        <form id="contacts-form2" class="list ">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="">
+            </label>
+            <div id="contacts-button-bar2" class=" button-bar ">
+                <a ui-sref="tabsController.newGroup" id="contacts-button4"
+                   class=" button button-positive  button-block icon ion-android-person-add "></a>
+                <button id="contacts-button5"
+                        class=" button button-positive  button-block icon ion-ios-download-outline "></button>
+            </div>
+        </form>
+
+        <ion-list id="contacts-list2" class=" ">
+
+
+
+            <ion-item class="item-avatar  " ng-repeat="group in groups"  id="contacts-list-item9">
+
+                    <a style="text-decoration:none" ui-sref="viewGroups({id: {{group.id}} })" id="tabsController-group-view">
+                        <div class="col col-100">
+                        <h2>{{group.name}}</h2>
+                        <p>{{group.contacts.length}} </p>
+                    </div> </a>
+
+                </div>
+            </ion-item>
+
+
+        </ion-list>
+    </ion-content>
+</ion-view>

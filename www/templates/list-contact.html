@@ -1,0 +1,33 @@
+<ion-view title="Add contact to groups" id="addGroupContact" class=" " ng-init="init()" cache-view="false">
+    <ion-content padding="true" class="has-header">
+
+            <div id="contacts-button-bar2" class=" button-bar ">
+
+                <button id="newContact-button14" class=" button button-dark  button-block " ng-click="cancelGroup()">Back</button>
+            </div>
+        </form>
+
+        <ion-list id="contacts-list2" class=" ">
+
+
+
+            <ion-item class="item-avatar  " ng-repeat="contact in contacts"  id="contacts-list-item9">
+                <div class="row">
+                    <div class="col col-75">
+                        <h2>{{contact.name}}</h2>
+                        <p>{{contact.cellphone}}</p>
+                    </div>
+                    <div class="col  col-25">
+
+                        <button  class="button button-assertive" ng-click="attachContactById($index)">
+                            <i class="icon ion-plus"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </ion-item>
+
+
+        </ion-list>
+    </ion-content>
+</ion-view>
