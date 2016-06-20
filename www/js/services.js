@@ -6,14 +6,18 @@ angular.module('app.services', [])
     .factory('baseUrl', function () {
         return document.getElementsByName('baseUrl')[0].getAttribute('content');
     })
-    .service('LoginService', function($q,baseUrl,$http) {
+    .service('LoginService', function($q, baseUrl, $http, $ionicUser) {
+
         return {
             loginUser: function(email, password) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
+                // get the ionic user to get the device token
+                var user_device = $ionicUser.get();
+
                 $http.post(
-                    baseUrl + "/login", {'username': email,'password':password}
+                    baseUrl + "/login", {'username': email, 'password':password, device: user_device.user_id}
                 ).success(function (data, status, header) {
                     if (status == 202) {
                         deferred.reject(data.message);
