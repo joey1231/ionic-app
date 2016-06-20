@@ -4,11 +4,7 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
     $scope.company = {
         company_name:''
     };
-    $scope.change={
-        newpassword:'',
-        oldpassword:'',
-        confirmpassword:''
-    }
+
     $scope.plans ={};
         //load the init of this controller
     $scope.init = function () {
@@ -28,4 +24,39 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
             }
         });
     }
+    $scope.password = {old: '', new: '', confirm: '',  userid:  $scope.user.id,};
+
+    //Post toUpdate password
+    $scope.updatepassword = function () {
+
+
+        if ($scope.password.new != $scope.password.confirm) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Confirmation',
+                template: 'New and Confirm password did not match'
+            });
+            return;
+        }
+
+        $http.post(
+            baseUrl + "/dashboard/update-password", $scope.password
+        ).success(function (data, status, header) {
+            if(status==200){
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Change password success!',
+                    template: data.message
+                });
+            }else{
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Change password failed!',
+                    template: data.message
+                });
+            }
+
+
+        }).error(function (data, status, header, config) {
+
+        });
+
+    };
 }
