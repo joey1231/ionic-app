@@ -7,14 +7,6 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('app', ['ionic','ionic.service.core','ngCordova', 'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 
-.config(['$ionicAppProvider', function($ionicAppProvider) {
-  $ionicAppProvider.identify({
-    app_id: '372e908c',
-    api_key: 'e90699fa88f36c1746c0c5b020083dc5529bfd09749fbe37',
-    dev_push: true
-  });
-}])
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,4 +22,32 @@ var app = angular.module('app', ['ionic','ionic.service.core','ngCordova', 'ioni
   });
 })
 
+.config(['$ionicAppProvider', function($ionicAppProvider) {
+  $ionicAppProvider.identify({
+    app_id: '372e908c',
+    api_key: 'e90699fa88f36c1746c0c5b020083dc5529bfd09749fbe37',
+    dev_push: true
+  });
+}])
+
 var controllers = {};
+
+controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPush) {
+
+  var user = $ionicUser.get();
+  if(!user.user_id) {
+    // Set your user_id here, or generate a random one.
+    user.user_id = $ionicUser.generateGUID();
+  };
+ 
+  // Metadata
+  angular.extend(user, {
+    name: 'SMSVoip Guest'
+  });
+ 
+  // Identify your user with the Ionic User Service
+  $ionicUser.identify(user).then(function(){
+    $scope.identified = true;
+    console.log('Identified user ' + user.name + '\n ID ' + user.user_id);
+  });
+}
