@@ -36,7 +36,7 @@ controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPu
 
     $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         alert("Successfully registered token " + data.token);
-        console.log('Ionic Push: Got token ', data.token, data.platform);
+        console.log('Ionic Push: Got token ', data.token, data.message);
         $scope.token = data.token;
     })
 
@@ -56,4 +56,15 @@ controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPu
         $scope.identified = true;
         console.log('Identified user ' + user.name + '\n ID ' + user.user_id);
     });
+
+     $ionicPush.register({
+       canShowAlert: true, //Can pushes show an alert on your screen?
+       canSetBadge: true, //Can pushes update app icon badges?
+       canPlaySound: true, //Can notifications play a sound?
+       canRunActionsOnWake: true, //Can run actions outside the app,
+       onNotification: function(notification) {
+         // Handle new push notifications here
+         return true;
+       }
+     });
 }
