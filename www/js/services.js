@@ -25,7 +25,7 @@ angular.module('app.services', [])
 
                 }).error(function (data, status, header, config) {
                     console.log(data);
-                    deferred.reject('Wrong credentials.');
+                    deferred.reject(ApiEndpoint.url);
 
                 });
                 promise.success = function(fn) {

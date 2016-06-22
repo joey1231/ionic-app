@@ -21,4 +21,10 @@ controllers.loginCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPop
         });
 
     }
+    $scope.signup=function(){
+        var alertPopup = $ionicPopup.alert({
+                title: 'Signup',
+                template: "Please Signup on SMSVOIP website <br/> https://staging.smsvoip.nscook.net/register"
+            });
+    }
 }

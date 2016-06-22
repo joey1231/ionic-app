@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('app', ['ionic', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  url: 'http://smsvoip.app/ionic'
+  url: 'https://joey.smsvoip.nscook.net/ionic'
 })
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
