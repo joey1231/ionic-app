@@ -1,4 +1,4 @@
-controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams) {
+controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams,ApiEndpoint) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
     $scope.company = {
@@ -10,13 +10,13 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
     $scope.init = function () {
         // Make an get request to fetch the data to server
         $http.get(
-            baseUrl + "/dashboard/company", { params:{ userid: $scope.user.id } }
+            ApiEndpoint.url + "/dashboard/company", { params:{ userid: $scope.user.id } }
         ).success(function (data) {
 
             $scope.company = data;
         }).error(function (data, status, header, config) {
         });
-        $http.get(baseUrl + '/plan/companies', { params:{ userid: $scope.user.id } }).success(function(data, status, header) {
+        $http.get(ApiEndpoint.url + '/plan/companies', { params:{ userid: $scope.user.id } }).success(function(data, status, header) {
             if (status == 200) {
                 $scope.plans = data.plans;
                 $scope.subscribe_to = data.subscribe_to;
@@ -39,7 +39,7 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
         }
 
         $http.post(
-            baseUrl + "/dashboard/update-password", $scope.password
+            ApiEndpoint.url + "/dashboard/update-password", $scope.password
         ).success(function (data, status, header) {
             if(status==200){
                 var alertPopup = $ionicPopup.alert({

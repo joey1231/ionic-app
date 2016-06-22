@@ -1,4 +1,4 @@
-controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $timeout, $ionicScrollDelegate) {
+controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $timeout, $ionicScrollDelegate,ApiEndpoint) {
 
 	/**
 	 * get the user token 
@@ -16,7 +16,7 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $ti
 		$scope.inbox = new Array();
 
 		// getting inbox data
-		$http.get(baseUrl + '/communication/inbox', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+		$http.get(ApiEndpoint.url + '/communication/inbox', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
             
             // check request status
             if (status == 200) {
@@ -47,7 +47,7 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $ti
 		$scope.conversations = new Array();
 
 		// getting conversation data
-		$http.get(baseUrl + '/communication/exchange/' + $stateParams.thread_key, {params:{userid:$scope.user.id}}).success(function(data, status, header) {
+		$http.get(ApiEndpoint.url + '/communication/exchange/' + $stateParams.thread_key, {params:{userid:$scope.user.id}}).success(function(data, status, header) {
 			
 			// passing it tru $scope
 			$scope.conversations =data.data.conversations;
@@ -110,7 +110,7 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $ti
         $scope.message = {
             'enabled': false,
         };
-        send.sendNormal(baseUrl + "/communication/send/sms", {
+        send.sendNormal(ApiEndpoint.url + "/communication/send/sms", {
             body: message,
             thread_key: $stateParams.thread_key,
             userid: $scope.user.id

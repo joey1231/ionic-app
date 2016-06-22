@@ -1,7 +1,7 @@
 /**
  * Created by joey on 6/15/2016.
  */
-controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams){
+controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams,ApiEndpoint){
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     $scope.init=function(){
 

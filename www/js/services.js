@@ -6,15 +6,16 @@ angular.module('app.services', [])
     .factory('baseUrl', function () {
         return document.getElementsByName('baseUrl')[0].getAttribute('content');
     })
-    .service('LoginService', function($q,baseUrl,$http) {
+    .service('LoginService', function($q,baseUrl,$http,ApiEndpoint) {
         return {
             loginUser: function(email, password) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
                 $http.post(
-                    baseUrl + "/login", {'username': email,'password':password}
+                    ApiEndpoint.url + "/login", {'username': email,'password':password}
                 ).success(function (data, status, header) {
+                    console.log(data);
                     if (status == 202) {
                         deferred.reject(data.message);
                     } else if (status == 200) {
@@ -23,6 +24,7 @@ angular.module('app.services', [])
                     }
 
                 }).error(function (data, status, header, config) {
+                    console.log(data);
                     deferred.reject('Wrong credentials.');
 
                 });
