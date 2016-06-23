@@ -63,7 +63,7 @@ controllers.contactsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicP
     }
 
     $scope.editInit= function(){
-        $http.get(baseUrl +'/contact/' + $stateParams.id,{params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+        $http.get(ApiEndpoint.url +'/contact/' + $stateParams.id,{params:{userid:$scope.user.id}}).success(function (data, status, headers) {
             if (status == 200) {
                 if (data.length == 0) {
                     $state.go('tabsController.contacts');

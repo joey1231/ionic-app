@@ -5,9 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('app', ['ionic', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
+var app = angular.module('app', ['ionic', 'app.routes', 'app.services', 'app.directives', 'angularMoment','ngCordova'])
 .constant('ApiEndpoint', {
-  url: 'https://joey.smsvoip.nscook.net/ionic'
+  //url: 'https://joey.smsvoip.nscook.net/ionic'
+  url:'http://localhost:8100/ionic'
 })
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

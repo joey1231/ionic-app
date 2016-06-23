@@ -8,7 +8,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         $scope.groups = new Array();
 
 
-        $http.get(baseUrl + '/group', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+        $http.get(ApiEndpoint.url + '/group', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
             console.log(data);
             if (status == 200) {
                 $scope.groups = data;
@@ -34,7 +34,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         }else{
             $scope.group.text_join_enable=0;
         }
-        $http.post(baseUrl + '/group', $scope.group).success(function (data, status, headers, config) {
+        $http.post(ApiEndpoint.url + '/group', $scope.group).success(function (data, status, headers, config) {
             console.log(data);
             if (status == 200) {
                 var alertPopup = $ionicPopup.alert({
@@ -59,7 +59,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
     }
 
     $scope.editInit= function(){
-        $http.get(baseUrl +'/group/' + $stateParams.id,{params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+        $http.get(ApiEndpoint.url +'/group/' + $stateParams.id,{params:{userid:$scope.user.id}}).success(function (data, status, headers) {
             if (status == 200) {
                 if (data.length == 0) {
                     $state.go('tabsController.contacts');
@@ -86,7 +86,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
 
         confirmPopup.then(function(res) {
             if(res) {
-                $http.delete(baseUrl + '/group/' +   $scope.group.id,{params:{userid:$scope.user.id}}).success(function (data, status, header) {
+                $http.delete(ApiEndpoint.url + '/group/' +   $scope.group.id,{params:{userid:$scope.user.id}}).success(function (data, status, header) {
                     if (status == 200) {
                         $state.go('tabsController.groups');
                     }
@@ -106,7 +106,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
 
         confirmPopup.then(function(res) {
             if(res) {
-                $http.post(baseUrl + "/group/detach",
+                $http.post(ApiEndpoint.url + "/group/detach",
                     {group_id: $scope.group.id, contact_id: $scope.contact.id,userid:$scope.user.id}
                 ).success(function (data, status, header) {
                     $scope.group.contacts.splice($id, 1);
@@ -129,7 +129,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
     $scope.updateGroup = function () {
 
         $http.put(
-            baseUrl + "/group/" + $stateParams.id, $scope.group
+            ApiEndpoint.url + "/group/" + $stateParams.id, $scope.group
         ).success(function (data, status, header) {
             if (status == 200) {
                 var alertPopup = $ionicPopup.alert({

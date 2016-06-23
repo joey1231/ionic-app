@@ -1,15 +1,11 @@
 <ion-view title="Profile" id="page10" class=" "  ng-init="init()" cache-view="false">
     <ion-content padding="true" class="has-header">
-        <form id="newContact-form7" class="list ">
-            <ion-item class="item-divider " id="newContact-list-item-divider6">Company Information</ion-item>
-            <label class="item item-input " id="newContact-input13">
-                <span class="input-label">Name</span>
-                <input type="text" placeholder="" ng-model="company.company_name" ng-disabled="user.is_owner==0">
-            </label>
-
-        </form>
-        <form id="newContact-form7" class="list ">
+           <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Profile Information</ion-item>
+            <ion-item class="item-avatar  " id="setting-list-item24">
+                <h2>Avatar</h2>
+                <p ng-click="getImageSaveContact()">change your avatar</p>
+            </ion-item>
             <label class="item item-input " id="newContact-input13">
                 <span class="input-label">Name</span>
                 <input type="text" placeholder="" ng-model="user.name" >
@@ -24,6 +20,15 @@
             </label>
 
         </form>
+        <form id="newContact-form7" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider6">Company Information</ion-item>
+            <label class="item item-input " id="newContact-input13">
+                <span class="input-label">Name</span>
+                <input type="text" placeholder="" ng-model="company.company_name" ng-disabled="user.is_owner==0">
+            </label>
+
+        </form>
+
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Change Password</ion-item>
             <label class="item item-input " id="login-input25">

@@ -54,6 +54,17 @@ angular.module('app.services', [])
             }
         });
     }
+    this.sendMultiple = function(url, message, $scope, $state,cellphones,contacts,groups) {
+        
+
+        $http.post(url, { userid: $scope.user.id, body: message.body, contacts: contacts, groups: groups, cellphones: cellphones}).success(function(data, status, header) {
+            if (status == 200) {
+                $scope.sendStatus = "sent";
+                console.log(data);
+                $state.go('tabsController.conversation',{thread_key:data.data.thread_key});
+            }
+        });
+    }
     this.sendNormal = function (url, data, $scope, flag) {
         // check if the body of message not empty or attachment
         if (($scope.body != '' && typeof $scope.body != 'undefined') || $scope.attachments.length > 0) {

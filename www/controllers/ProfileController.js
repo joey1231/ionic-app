@@ -1,4 +1,4 @@
-controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams,ApiEndpoint) {
+controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams,ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
     $scope.company = {
@@ -59,4 +59,24 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
         });
 
     };
+
+    $scope.getImageSaveContact = function() {       
+        // Image picker will load images according to these settings
+    var options = {
+        maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+        width: 800,
+        height: 800,
+        quality: 80            // Higher is better
+    };
+    $scope.image ='';
+    $cordovaImagePicker.getPictures(options).then(function (results) {
+                // Loop through acquired images
+        for (var i = 0; i < results.length; i++) {
+            console.log('Image URI: ' + results[i]);   // Print image URI
+              $scope.image=results[i];
+        }
+    }, function(error) {
+        console.log('Error: ' + JSON.stringify(error));    // In case of error
+    });
+};  
 }
