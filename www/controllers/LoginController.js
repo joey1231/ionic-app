@@ -1,4 +1,4 @@
-controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ionicPopup, $state, LoginService, $location) {
+controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ionicPopup, $state, LoginService, $location, $cordovaDialogs, $cordovaToast) {
 
     $scope.credentials = {
         email: '',
@@ -14,10 +14,14 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
             $state.go('tabsController.inbox');
         }).error(function(data) {
 
-            var alertPopup = $ionicPopup.alert({
-                title: 'Login failed!',
-                template: data
-            });
+
+            // $cordovaDialogs.alert(data, "Login failed!", "Try again.");
+            $cordovaToast.show(data, 'short', 'bottom');
+
+            // var alertPopup = $ionicPopup.alert({
+            //     title: 'Login failed!',
+            //     template: data
+            // });
         });
 
     }
