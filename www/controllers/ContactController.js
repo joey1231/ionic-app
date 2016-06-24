@@ -146,7 +146,39 @@ controllers.contactsCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $i
     $scope.cancel = function() {
         $state.go('tabsController.contacts');
     }
+    $scope.attachContactsToGroupp= function(){
+       var selected_contact =new Array();
+       angular.forEach($scope.contacts,function($item){
+            if($item.checked){
+                selected_contact.push($item.id);
+            }
+       });
+      var confirmPopup = $ionicPopup.confirm({
+            title: 'Attach Contact',
+            template: 'Are you sure you want to attach this contacts?'
+        });
 
+        confirmPopup.then(function(res) {
+            if (res) {
+                $http.post(ApiEndpoint.url + "/group/attach", { group_id: $stateParams.id, contact_id: selected_contact.toString(), userid: $scope.user.id }).success(function(data, status, header) {
+                    if (status != 200) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Attach new contact failed',
+                            template: data.message
+                        });
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Attach new contact success',
+                            template: data.message
+                        });
+                    }
+
+                });
+            } else {
+
+            }
+        });
+    }
     $scope.attachContactById = function($id) {
         $scope.contact = $scope.contacts[$id];
         var confirmPopup = $ionicPopup.confirm({

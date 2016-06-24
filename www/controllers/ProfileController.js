@@ -63,8 +63,8 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
         // Image picker will load images according to these settings
         var options = {
             maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-            width: 800,
-            height: 800,
+            width: 400,
+            height: 400,
             quality: 80 // Higher is better
         };
         $scope.image = '';
