@@ -1,4 +1,6 @@
-controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $timeout, $ionicScrollDelegate,ApiEndpoint) {
+
+controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send, $timeout, $ionicScrollDelegate) {
+
 
 	/**
 	 * get the user token 

@@ -5,24 +5,41 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('app', ['ionic', 'app.routes', 'app.services', 'app.directives', 'angularMoment','ngCordova'])
+
+var app = angular.module('app', ['ionic','ionic.service.core',  'ngCordova',  'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  url: 'https://joey.smsvoip.nscook.net/ionic'
-  //url:'http://localhost:8100/ionic'
-})
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+  url:'https://mark.smsvoip.nscook.net/ionic'
 })
 
+.run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+
+        var push = new Ionic.Push({
+          "debug": true
+        });
+
+        push.register(function(token) {
+          console.log("Device token:",token.token);
+        });
+
+    });
+})
+
+
+
 var controllers = {};
+
+controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPush) {
+
+}

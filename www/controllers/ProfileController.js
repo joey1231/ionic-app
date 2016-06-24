@@ -1,22 +1,21 @@
-controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams,ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
+controllers.profileCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
     $scope.company = {
-        company_name:''
+        company_name: ''
     };
 
-    $scope.plans ={};
-        //load the init of this controller
-    $scope.init = function () {
+    $scope.plans = {};
+    //load the init of this controller
+    $scope.init = function() {
         // Make an get request to fetch the data to server
         $http.get(
-            ApiEndpoint.url + "/dashboard/company", { params:{ userid: $scope.user.id } }
-        ).success(function (data) {
+            ApiEndpoint.url + "/dashboard/company", { params: { userid: $scope.user.id } }
+        ).success(function(data) {
 
             $scope.company = data;
-        }).error(function (data, status, header, config) {
-        });
-        $http.get(ApiEndpoint.url + '/plan/companies', { params:{ userid: $scope.user.id } }).success(function(data, status, header) {
+        }).error(function(data, status, header, config) {});
+        $http.get(ApiEndpoint.url + '/plan/companies', { params: { userid: $scope.user.id } }).success(function(data, status, header) {
             if (status == 200) {
                 $scope.plans = data.plans;
                 $scope.subscribe_to = data.subscribe_to;
@@ -24,10 +23,10 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
             }
         });
     }
-    $scope.password = {old: '', new: '', confirm: '',  userid:  $scope.user.id,};
+    $scope.password = { old: '', new: '', confirm: '', userid: $scope.user.id, };
 
     //Post toUpdate password
-    $scope.updatepassword = function () {
+    $scope.updatepassword = function() {
 
 
         if ($scope.password.new != $scope.password.confirm) {
@@ -40,13 +39,13 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
 
         $http.post(
             ApiEndpoint.url + "/dashboard/update-password", $scope.password
-        ).success(function (data, status, header) {
-            if(status==200){
+        ).success(function(data, status, header) {
+            if (status == 200) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Change password success!',
                     template: data.message
                 });
-            }else{
+            } else {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Change password failed!',
                     template: data.message
@@ -54,29 +53,29 @@ controllers.profileCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPo
             }
 
 
-        }).error(function (data, status, header, config) {
+        }).error(function(data, status, header, config) {
 
         });
 
     };
 
-    $scope.getImageSaveContact = function() {       
+    $scope.getImageSaveContact = function() {
         // Image picker will load images according to these settings
-    var options = {
-        maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-        width: 800,
-        height: 800,
-        quality: 80            // Higher is better
+        var options = {
+            maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+            width: 800,
+            height: 800,
+            quality: 80 // Higher is better
+        };
+        $scope.image = '';
+        $cordovaImagePicker.getPictures(options).then(function(results) {
+            // Loop through acquired images
+            for (var i = 0; i < results.length; i++) {
+                console.log('Image URI: ' + results[i]); // Print image URI
+                $scope.image = results[i];
+            }
+        }, function(error) {
+            console.log('Error: ' + JSON.stringify(error)); // In case of error
+        });
     };
-    $scope.image ='';
-    $cordovaImagePicker.getPictures(options).then(function (results) {
-                // Loop through acquired images
-        for (var i = 0; i < results.length; i++) {
-            console.log('Image URI: ' + results[i]);   // Print image URI
-              $scope.image=results[i];
-        }
-    }, function(error) {
-        console.log('Error: ' + JSON.stringify(error));    // In case of error
-    });
-};  
 }

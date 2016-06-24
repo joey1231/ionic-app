@@ -1,19 +1,27 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *">
+
     <meta content="ionic" name="baseUrl"/>
     <title></title>
 
       <script src="scripts/platformOverrides.js"></script>
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+    <script src="lib/angular-websocket/dist/angular-websocket.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ionic-service-core/ionic-core.js"></script>
+    <script src="lib/ionic-service-push/ionic-push.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+
     <script src="lib/ng-cordova-master/ng-cordova.min.js"></script>
-    <script src="cordova.js"></script>
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -66,7 +74,7 @@
   </head>
   <body ng-app="app" animation="slide-left-right-ios7">
   <div>
-    <div>
+    <div ng-controller="parentController">
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button class="button-icon icon ion-ios-arrow-back">Back</ion-nav-back-button>
         </ion-nav-bar>
