@@ -25,13 +25,13 @@ var app = angular.module('app', ['ionic','ionic.service.core',  'ngCordova',  'i
             StatusBar.styleDefault();
         }
 
-        var push = new Ionic.Push({
-          "debug": true
-        });
+        // var push = new Ionic.Push({
+        //   "debug": true
+        // });
 
-        push.register(function(token) {
-          console.log("Device token:",token.token);
-        });
+        // push.register(function(token) {
+        //   console.log("Device token:",token.token);
+        // });
 
     });
 })
@@ -41,5 +41,5 @@ var app = angular.module('app', ['ionic','ionic.service.core',  'ngCordova',  'i
 var controllers = {};
 
 controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPush) {
-
+    
 }

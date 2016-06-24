@@ -20,8 +20,9 @@ angular.module('app.services', [])
 
                     ApiEndpoint.url + "/login", { 'username': email, 'password': password, device: user_device.user_id }
                 ).success(function(data, status, header) {
-
+                    
                     if (status == 202) {
+
                         deferred.reject(data.message);
                     } else if (status == 200) {
                         deferred.resolve('Welcome ' + data.data.name + '!');
