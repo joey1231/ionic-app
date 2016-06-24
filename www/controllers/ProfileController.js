@@ -1,4 +1,4 @@
-controllers.profileCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
+controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
     $scope.company = {

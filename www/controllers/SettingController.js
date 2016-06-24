@@ -1,4 +1,4 @@
-controllers.settingCtrl = function($scope, $http, baseUrl, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint) {
+controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     $scope.profile = new Array();
     $scope.profile.forwarding_devices = new Array();

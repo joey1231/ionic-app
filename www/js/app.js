@@ -8,7 +8,8 @@
 
 var app = angular.module('app', ['ionic','ionic.service.core',  'ngCordova',  'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  url:'https://mark.smsvoip.nscook.net/ionic'
+  url:'http://localhost:8100/ionic'
+  //url:'https://mark.smsvoip.nscook.net/ionic'
 })
 
 .run(function($ionicPlatform) {
