@@ -1,3 +1,3 @@
 controllers.settingCtrl = function($scope) {
-	
+
 }
