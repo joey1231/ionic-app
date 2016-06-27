@@ -1,4 +1,4 @@
-controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send, $timeout, $ionicScrollDelegate, $ionicActionSheet, $cordovaToast) {
+controllers.inboxCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send, $timeout, $ionicScrollDelegate, $ionicActionSheet, $cordovaToast) {
 
 
     /**
@@ -8,10 +8,18 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send,
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
 
     /**
+     * disable click when inbox action sheet is fired!
+     * enable when cancel
+     * 
+     * @type {Boolean}
+     */
+    $scope.clickEventDisabled = false;
+
+    /**
      * inbox function
      * @return {[function]} [loads inbox messages]
      */
-    $scope.inbox = function() {
+    $scope.loadInbox = function() {
 
         // new inbox array
         $scope.inbox = new Array();
@@ -33,38 +41,33 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send,
     /**
      * initiate inbox
      */
-    $scope.inbox();
+    $scope.loadInbox();
+
+    /**
+     * goto conversation
+     */
+    $scope.go = function(thread_key) {
+    	// 'tabsController.conversation({thread_key: thread.thread_key})'
+    	$state.go('tabsController.conversation', {thread_key: thread_key});
+    }
+
 
     /**
      * on-hold event (longpress)
      * return actionsheet
      */
-    $scope.showInboxAction = function(event, id, thread_key) {
+    $scope.showInboxAction = function(event, thread) {
 
-        /*
-        var options = {
-            title: 'What do you want with this image?',
-            buttonLabels: ['Read/Unread', 'Star/Unstar'],
-            addCancelButtonWithLabel: 'Cancel',
-            androidEnableCancelButton: true,
-            winphoneEnableCancelButton: true,
-            addDestructiveButtonWithLabel: 'Delete Thread'
-        };
+    	/**
+    	 * disable ng-click when ng-hold is fired
+    	 * @type {Boolean}
+    	 */
+    	$scope.clickEventDisabled = true;
 
-        $cordovaActionSheet.show(options).then(function(btnIndex) {
-            switch (btnIndex) {
-            	case 1:
-            		console.log('delete');
-            	case 2:
-            		console.log('read');
-            	case 3:
-            		console.log('star');
-            	default: 
-            		console.log('default');
-            	break;
-            }
-        });*/
-
+    	/**
+    	 * inbox actions
+    	 * event ng-hold
+    	 */
         $ionicActionSheet.show({
             buttons: [
                 { text: 'Read/Unread' },
@@ -73,17 +76,27 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send,
             destructiveText: 'Delete',
             destructiveButtonClicked: function() {
                 // do stuff
-                $scope.deleteThread(thread_key);
+                $scope.deleteThread(thread.thread_key);
                 return true;
             },
             titleText: 'Inbox action',
             cancelText: 'Cancel',
             cancel: function() {
                 // add cancel code..
+                $scope.clickEventDisabled = false;
             },
             buttonClicked: function(index) {
-            	$cordovaToast.show("not yet implemented", 'short', 'bottom')
-                console.log(index);
+            	switch (index) {
+            		case 0:
+            			// toogling read/unread
+            			$scope.toggleRead(thread.thread_key, thread.unread);
+            		break;
+            		case 1:
+            			// toggling star/unstar
+            			$scope.toggleStar(thread.thread_key, thread.starred);
+            		break;
+            	}
+            	$cordovaToast.show("not yet implemented", 'short', 'bottom');
                 return true;
             }
         });
@@ -93,15 +106,59 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send,
         event.stopPropagation();
     }
 
+    /**
+     * [toggleReadClass getting the class if read or unread]
+     * @param  {[type]} unread [description]
+     * @return {[type]}        [description]
+     */
+    $scope.toggleReadClass = function(unread) {
+    	return (unread == 1) ? 'unread' : 'read';
+    }
+
+    /**
+     * toggling read/unread
+     * @param  {[type]} thread_key [description]
+     * @param  {[type]} unread     [description]
+     * @return {[type]}            [description]
+     */
+    $scope.toggleRead = function(thread_key, unread) {
+    	$http.post(ApiEndpoint.url + "/communication/unread", {
+            thread_key: thread_key,
+            unread: (unread == 1) ? 0 : 1,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+        	if (status == 200) {
+        		$scope.loadInbox();
+        	}
+        });
+    }
+
+    $scope.toggleStarClass = function(starred) {
+    	return (starred == 1) ? 'ion-ios-heart' : 'ion-ios-heart-outline';
+    }
+
+    $scope.toggleStar = function(thread_key, starred) {
+    	$http.post(ApiEndpoint.url + "/communication/starred", {
+            thread_key: thread_key,
+            starred: (starred == 1) ? 0 : 1,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+        	if (status == 200) {
+        		$scope.loadInbox();
+        	}
+        });
+    }
+
     $scope.deleteThread = function(thread_key) {
         $http.post(ApiEndpoint.url + "/communication/delete-thread", { thread_key: thread_key, userid: $scope.user.id }).success(function(data, status, header) {
             $cordovaToast.show(data.message, 'short', 'bottom').then(function(success) {
                 // success
-                $state.inbox();
+                
             }, function(error) {
                 // error
                 $state.reload();
             });
+            $scope.loadInbox();
         });
     }
 
@@ -189,14 +246,4 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, ApiEndpoint, send,
 
         event.preventDefault();
     };
-
-
-    /**
-     * this is to toggle star
-     * @return {[type]} [description]
-     */
-    $scope.toggleStar = function() {
-        console.log("not yet implemented");
-    }
-
 }

@@ -9917,6 +9917,13 @@ img.attachment-img {
   position: relative;
   max-width: 100%; }
 
+.read {
+  background: rgba(226, 226, 226, 0.6) !important; }
+
+.starred {
+  font-size: 26px !important;
+  font-weight: lighter !important; }
+
 .user-profile {
   margin-right: 20px !important;
   -webkit-box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;
