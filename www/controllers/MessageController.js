@@ -38,6 +38,32 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
             }
         });
     }
+
+    var contactAutocompleteData = {};
+
+    $scope.initContacts = function() {
+        $http.get(ApiEndpoint.url + '/allContact', { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+            if (status == 200) {
+                contactAutocompleteData = data.data;
+                console.log(data);
+            } else {
+                contactAutocompleteData = [];
+            }
+        });
+        console.log(contactAutocompleteData);
+    }
+
+    $scope.contactQuery = function(query) {
+        if (query) {
+            return {
+                items: contactAutocompleteData
+            };
+        }
+        return {
+            items: []
+        };
+    }
+
     $scope.sendMessage = function() {
         send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
     }
