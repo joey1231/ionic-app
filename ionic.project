@@ -4,7 +4,7 @@
   "proxies": [
     {
       "path": "/ionic",
-      "proxyUrl": "http://smsvoip.app/ionic"
+      "proxyUrl": "https://joey.smsvoip.nscook.net/ionic"
     }
   ],
   "gulpStartupTasks": [

@@ -21,6 +21,9 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer",
+
     {
       "variables": {
         "SENDER_ID": "5945676137"

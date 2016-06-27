@@ -9916,3 +9916,15 @@ a.autolinker {
 img.attachment-img {
   position: relative;
   max-width: 100%; }
+
+.user-profile {
+  margin-right: 20px !important;
+  -webkit-box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;
+  -moz-box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;
+  box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;
+  border-radius: 50% !important;
+  vertical-align: middle !important;
+  border: 0 !important;
+  width: 60px !important;
+  height: 60px !important;
+  box-sizing: border-box !important; }

@@ -1,12 +1,16 @@
 <ion-view title="Profile" id="page10" class=" "  ng-init="init()" cache-view="false">
     <ion-content padding="true" class="has-header">
            <form id="newContact-form7" class="list ">
-            <ion-item class="item-divider " id="newContact-list-item-divider6">Profile Information</ion-item>
-            <ion-item class="item-avatar  " id="setting-list-item24">
-                <h2>Avatar</h2>
-                <p ng-click="getImageSaveContact()">change your avatar</p>
+            <ion-item class="item-divider " id="newContact-list-item-divider6"> Profile Information</ion-item>
+            <ion-item class="item-avatar item item-icon-left " id="setting-list-item24">
+                <i class="icon ion-ios-contact" ng-if="profile.avatar==null || profile.avatar==''"></i>
+                <i class="icon" ng-if="profile.avatar!= null || profile.avatar!=''"><img ng-show="profile.avatar= != undefined" ng-src="{{profile.avatar}}" class="user-profile"></i>
+                <h2><i class="ios-contact-outline"></i>Avatar</h2>
+                <a ng-click="getImageSaveContact()">Change your avatar</a>
+                <a ng-click="takePicture()">Take picture</a>
             </ion-item>
             <label class="item item-input " id="newContact-input13">
+
                 <span class="input-label">Name</span>
                 <input type="text" placeholder="" ng-model="user.name" >
             </label>
@@ -51,7 +55,7 @@
 
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Plan Information</ion-item>
-            <ion-list id="contacts-list2" class=" "  ng-repeat="plan in plans" ng-if="plan.stripe_id=='trial'">
+            <ion-list id="contacts-list2" class=" "  ng-repeat="plan in plans" ng-if="plan.stripe_id==subscribe_to">
 
 
 
