@@ -91,7 +91,7 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             targetWidth: 100,
             targetHeight: 100,
             popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: true,
+            saveToPhotoAlbum: false,
             correctOrientation:true
         };
 
@@ -102,9 +102,17 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             // error
         });*/
         CameraService.getPicture(options).then(function(imageData) {
-             $scope.profile.avatar = imageData;
+            var alertPopup = $ionicPopup.alert({
+                title: 'Login e!',
+                template: imageData
+            });
+             $scope.profile.avatar =imageData;
+            $scope.imageToUpload= imageData;
          }, function(err) {
-             console.log(err);
+            var alertPopup = $ionicPopup.alert({
+                title: 'Login ers!',
+                template: err
+            });
          });
 
     };
@@ -117,13 +125,18 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
 
         $cordovaCamera.getPicture(options).then(
             function(imageURI) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Login e!',
+                    template: imageURI
+                });
+                $scope.imageToUpload= imageURI
+                $scope.profile.avatar = imageURI
                 window.resolveLocalFileSystemURI(imageURI, function(fileEntry) {
                     $scope.picData = fileEntry.nativeURL;
                     $scope.ftLoad = true;
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Login e!',
-                        template: fileEntry.nativeURL
-                    });
+
+                    $scope.imageToUpload= fileEntry.nativeURL;
+                    $scope.profile.avatar = fileEntry.nativeURL;
                   /*  var image = document.getElementById('myImage');
                     image.src = fileEntry.nativeURL;*/
                 });
@@ -177,7 +190,7 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
 
         var options = new FileUploadOptions();
         options.fileKey = "file";
-        options.fileName =  $scope.imageToUpload.substr(results[i].lastIndexOf('/') + 1);
+        options.fileName =  $scope.imageToUpload.substr($scope.imageToUpload.lastIndexOf('/') + 1);
         options.mimeType = type;
 
         var params = {};

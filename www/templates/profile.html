@@ -2,12 +2,14 @@
     <ion-content padding="true" class="has-header">
            <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6"> Profile Information</ion-item>
-            <ion-item class="item-avatar item item-icon-left " id="setting-list-item24">
+            <ion-item class="item-avatar item item-icon-left item-icon-right" id="setting-list-item24">
                 <i class="icon ion-ios-contact" ng-if="profile.avatar==null || profile.avatar==''"></i>
                 <i class="icon" ng-if="profile.avatar!= null || profile.avatar!=''"><img ng-show="profile.avatar= != undefined" ng-src="{{profile.avatar}}" class="user-profile"></i>
                 <h2><i class="ios-contact-outline"></i>Avatar</h2>
-                <a ng-click="getImageSaveContact()">Change your avatar</a>
+                <a ng-click="getImageSaveContact()">Change your avatar</a><br/>
                 <a ng-click="takePicture()">Take picture</a>
+                <i class="icon" ng-if="imageToUpload !=''"><button class="button button-positive   button-block " ng-click="updateProfile()">Update</button></i>
+
             </ion-item>
             <label class="item item-input " id="newContact-input13">
 
