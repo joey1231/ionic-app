@@ -53,15 +53,20 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
         console.log(contactAutocompleteData);
     }
 
-    $scope.contactQuery = function(query) {
-        if (query) {
-            return {
-                items: contactAutocompleteData
-            };
-        }
+    $scope.contactQuery = function(query, isInitializing) {
         return {
-            items: []
-        };
+            contacts: $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).success(function() {
+                return data.data;
+            })
+        } 
+    }
+
+    $scope.selectedContacts = function(callback) {
+        console.log(callback);
+    }
+
+    $scope.removedContacts = function(callback) {
+        console.log(callback);
     }
 
     $scope.sendMessage = function() {
