@@ -83,7 +83,16 @@ angular.module('app.services', [])
                 if (status == 200) {
                     $scope.sendStatus = "sent";
                     console.log(data);
-                    $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
+                    $scope.loadConversation();
+                    $scope.message = {
+                        'enabled': true,
+                    };
+
+                    $scope.input.message = "";
+                    // $scope.sendStatus = "sent";
+                    // console.log(data);
+                    // $scope.loadConversation();
+                    // // $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
                 }
             });
         }

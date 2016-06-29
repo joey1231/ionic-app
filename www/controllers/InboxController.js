@@ -12,6 +12,9 @@ controllers.inboxCtrl = function(
     ScaleDronePush,
     ScaleDroneService) {
 
+    $scope.input = {
+        message: ""
+    }
 
     /**
      * get the user token 
@@ -218,11 +221,14 @@ controllers.inboxCtrl = function(
         // conversation new array
         $scope.conversations = new Array();
 
+        $scope.recipients = [];
+
         // getting conversation data
         $http.get(ApiEndpoint.url + '/communication/exchange/' + $stateParams.thread_key, { params: { userid: $scope.user.id } }).success(function(data, status, header) {
-
             // passing it tru $scope
             $scope.conversations = data.data.conversations;
+
+            $scope.recipients = data.data.recipients;
 
             // setting title for the conversation
             var title = "";
@@ -289,16 +295,41 @@ controllers.inboxCtrl = function(
      * send function
      * @return {[type]} [description]
      */
-    $scope.send = function(event, message) {
-        console.log(message);
+    $scope.send = function(event, message, recipients) {
+        var contacts = [];
+        
+        angular.forEach(recipients.contacts, function(contact, key) {
+            contacts.push(contact.id);
+        });
+
+        var groups = [];
+
+        angular.forEach(recipients.groups, function(group, key) {
+            groups.push(group.id);
+        });
+
+        var cellphones = [];
+
         $scope.message = {
             'enabled': false,
         };
-        send.sendSingle(ApiEndpoint.url + "/communication/send/sms", {
+        var sendMessage = send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", {
             body: message,
             thread_key: $stateParams.thread_key,
             userid: $scope.user.id
-        }, $scope, false);
+        }, $scope, $state, cellphones, contacts, groups);
+
+        if (sendMessage == true) {
+            $scope.sendStatus = "sent";
+            console.log(data);
+            $scope.loadConversation();
+            $scope.message = {
+                'enabled': true,
+            };
+
+            $scope.input.message = "";
+            // $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
+        }
 
         event.preventDefault();
     };
