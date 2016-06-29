@@ -1,4 +1,6 @@
-controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send) {
+controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send, ScaleDronePush) {
+
+
     /**
      * get the user token 
      * @type {[type]}
@@ -12,7 +14,6 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
         number: '',
         message: '',
     };
-
 
     $scope.send = function(message) {
 

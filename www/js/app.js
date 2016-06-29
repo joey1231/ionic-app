@@ -11,6 +11,9 @@ var app = angular.module('app', ['ionic', 'ion-autocomplete', 'ionic.service.cor
   url:'http://localhost:8100/ionic'
   // url:'https://joey.smsvoip.nscook.net/ionic'
 })
+.constant('ScaleDronePush', {
+    channel_id: 'Not4yRVrFtQgNuDL'
+})
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -26,14 +29,8 @@ var app = angular.module('app', ['ionic', 'ion-autocomplete', 'ionic.service.cor
             StatusBar.styleDefault();
         }
 
-        // var push = new Ionic.Push({
-        //   "debug": true
-        // });
-
-        // push.register(function(token) {
-        //   console.log("Device token:",token.token);
-        // });
-
+        
+        
     });
 })
 
@@ -41,6 +38,7 @@ var app = angular.module('app', ['ionic', 'ion-autocomplete', 'ionic.service.cor
 
 var controllers = {};
 
-controllers.parentController = function($scope, $rootScope, $ionicUser, $ionicPush) {
+controllers.parentController = function($scope, $state, $http, $rootScope, $ionicUser, $ionicPush, ApiEndpoint, ScaleDronePush) {
+
     
 }

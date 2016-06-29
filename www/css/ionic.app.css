@@ -9923,3 +9923,6 @@ img.attachment-img {
 .starred {
   font-size: 26px !important;
   font-weight: lighter !important; }
+
+#newMessageForm textarea {
+  height: 400px !important; }

@@ -52,8 +52,6 @@ angular.module('app.services', [])
     }])
     .service('send', ['$http', function($http) {
         this.sendSingle = function(url, message, $scope, $state) {
-
-
             $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number] }).success(function(data, status, header) {
                 if (status == 200) {
                     $scope.sendStatus = "sent";
@@ -71,6 +69,46 @@ angular.module('app.services', [])
                     $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
                 }
             });
+        }
+    }])
+    .service('ScaleDroneService', ['$http', function($http) {
+        this.init = function(channel, ApiEndpoint, $scope, $state, user_id) {
+            $http.get(ApiEndpoint.url + '/notification/getData', { params: { userid: user_id } }).success(function(data, status) {
+            if (status == 200) {
+                
+                var drone = new ScaleDrone(channel);
+
+                drone.on('open', function(error) {
+                    console.log('Drone Ready');
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    var room = drone.subscribe(data.notification_room);
+
+                    room.on('open', function(error) {
+                        if (error) {
+                            console.log(error);
+                        }
+                    });
+
+                    room.on('data', function(data) {
+                        console.log(data);
+                        if (data.event == "new_message") {
+                            console.log($state.current);
+                            if ($state.current.name == "tabsController.inbox") {
+                                $scope.loadInbox();
+                            }
+
+                            if ($state.current.name == "tabsController.conversation") {
+                                $scope.loadConversation();
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
         }
     }]);
         
