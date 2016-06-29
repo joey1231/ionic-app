@@ -113,7 +113,7 @@ controllers.inboxCtrl = function(
             			$scope.toggleStar(thread.thread_key, thread.starred);
             		break;
             	}
-            	$cordovaToast.show("not yet implemented", 'short', 'bottom');
+            	// $cordovaToast.show("not yet implemented", 'short', 'bottom');
                 return true;
             }
         });
