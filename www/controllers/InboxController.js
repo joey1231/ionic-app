@@ -67,6 +67,17 @@ controllers.inboxCtrl = function(
      * goto conversation
      */
     $scope.go = function(thread_key) {
+
+        $http.post(ApiEndpoint.url + "/communication/unread", {
+            thread_key: thread_key,
+            unread: 0,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+            if (status == 200) {
+                $scope.loadInbox();
+            }
+        });
+
     	// 'tabsController.conversation({thread_key: thread.thread_key})'
     	$state.go('tabsController.conversation', {thread_key: thread_key});
     }
