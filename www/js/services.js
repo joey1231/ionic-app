@@ -115,9 +115,7 @@ angular.module('app.services', [])
                     });
 
                     room.on('data', function(data) {
-                        console.log(data);
                         if (data.event == "new_message") {
-                            console.log($state.current);
                             if ($state.current.name == "tabsController.inbox") {
                                 $scope.loadInbox();
                             }
