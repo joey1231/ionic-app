@@ -9,6 +9,25 @@
                 <span class="input-label">Message</span><textarea placeholder="" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
             </label>
         </form>
+        <form id="newContact-form7" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider6">Attachments</ion-item>
+            <ion-list id="contacts-list2" class=" "  >
+
+                <ion-item class="item-avatar item item-icon-right "   id="contacts-list-item9">
+
+                    Phone Number
+                    <i class="icon ion-checkmark-circled balanced"></i>
+
+                </ion-item>
+
+
+
+            </ion-list>
+            <div id="newContact-button-bar4" class=" button-bar ">
+
+                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="fileChooseDialog()">Select File</button>
+            </div>
+        </form>
         <button id="messages-button6" class=" button button-positive  button-block icon-right ion-android-send " ng-disabled="sendStatus=='sending'" ng-click="send(message)">Send</button>
     </ion-content>
 </ion-view>

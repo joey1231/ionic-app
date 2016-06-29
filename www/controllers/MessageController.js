@@ -1,4 +1,4 @@
-controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send) {
+controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send,Attachments) {
     /**
      * get the user token 
      * @type {[type]}
@@ -40,6 +40,18 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
     }
     $scope.sendMessage = function() {
         send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
+    }
+    $scope.fileChooseDialog= function () {
+        fileChooser.open(function(uri){
+            alert(uri);
+            window.FilePath.resolveNativePath(uri, function(localFileUri) {
+                alert(localFileUri);
+                Attachments.attach($scope,localFileUri);
+            },function(error){
+                alert('error');
+                alert(error);
+            });
+        });
     }
 
 }

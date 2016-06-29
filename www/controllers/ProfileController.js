@@ -212,15 +212,15 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
                 });
                 $scope.imageToUpload='';
             }, function(error) {
-                console.log('Error: ' + JSON.stringify(error)); // In case of error
+
                 var alertPopup = $ionicPopup.alert({
-                    title: 'Login failed!',
-                    template: JSON.parse(error)
+                    title: 'Error updating profile',
+                    template: error.message
                 });
             }, options);
         }catch(ex){
             var alertPopup = $ionicPopup.alert({
-                title: 'Login dd!',
+                title: 'Error updating profile',
                 template:  ex.message
             });
         }

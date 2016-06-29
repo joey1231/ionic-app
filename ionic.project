@@ -1,11 +1,10 @@
 {
   "name": "ionic-sample",
-  "app_id": "372e908c",
+  "app_id": "68895e60",
   "proxies": [
     {
       "path": "/ionic",
       "proxyUrl": "https://joey.smsvoip.nscook.net/ionic"
-
     }
   ],
   "gulpStartupTasks": [

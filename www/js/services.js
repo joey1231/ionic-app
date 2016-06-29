@@ -67,6 +67,49 @@ angular.module('app.services', [])
     .service('BlankService', [function() {
 
     }])
+    .service('Attachments',function($http,ApiEndpoint,$ionicPopup){
+            this.attach= function($scope,$fileUrl){
+                var ext = this.getExtension($fileUrl);
+               $extensions =  { 'mpeg':'video/mpeg', 'mp4':'video/mp4','quicktime': 'video/quicktime','webm': 'video/webm','3gpp': 'video/3gpp', '3gpp2':'video/3gpp2', '3gpp-tt':'video/3gpp-tt', 'H261':'video/H261', 'H263':'video/H263', 'H263-1998':'video/H263-1998', 'H263-2000':'video/H263-2000', 'H264':'video/H264', 'jpeg':'image/jpeg','jpg':'image/jpeg',  'gif':'image/gif','png': 'image/png','bmp': 'image/bmp', 'vcard':'text/vcard','csv': 'text/csv', 'rtf':'text/rtf','richtext': 'text/richtext', 'calendar':'text/calendar','pdf': 'application/pdf','basic': 'audio/basic','L24': 'audio/L24', 'mp4':'audio/mp4','mpeg': 'audio/mpeg','ogg': 'audio/ogg', 'vorbis':'audio/vorbis','vnd.rn-realaudio': 'audio/vnd.rn-realaudio','vnd.wave': 'audio/vnd.wave', '3gpp':'audio/3gpp','3gpp2': 'audio/3gpp2','ac3': 'audio/ac3','vnd.wave': 'audio/vnd.wave', 'webm':'audio/webm','amr-nb': 'audio/amr-nb','amr': 'audio/amr'};
+                var type = $extensions[ext];
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName =  $fileUrl.substr($fileUrl.lastIndexOf('/') + 1);
+                options.mimeType = type;
+
+                var params = {};
+                params.userid = $scope.user.id;
+
+                options.params = params;
+
+
+                try{
+                    var ft = new FileTransfer();
+                    ft.upload(  $fileUrl,ApiEndpoint.url + '/attachment', function(data,status){
+                        alert(JSON.stringify(data));
+                        return data;
+                    }, function(error) {
+                        alert(JSON.stringify(error))
+                        return error;
+                    }, options);
+                }catch(ex){
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Error updating profile',
+                        template:  ex.message
+                    });
+                }
+            }
+            this.getExtension= function(path) {
+                var basename = path.split(/[\\/]/).pop(),  // extract file name from full path ...
+                // (supports `\\` and `/` separators)
+                    pos = basename.lastIndexOf(".");       // get last position of `.`
+
+                if (basename === "" || pos < 1)            // if file name is empty or ...
+                    return "";                             //  `.` not found (-1) or comes first (0)
+
+                return basename.slice(pos + 1);            // extract extension ignoring `.`
+            }
+    })
     .service('send', ['$http', function($http) {
         this.sendSingle = function(url, message, $scope, $state) {
 

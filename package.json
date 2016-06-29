@@ -23,7 +23,7 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
-
+    "cordova-plugin-filepath",
     {
       "variables": {
         "SENDER_ID": "5945676137"
