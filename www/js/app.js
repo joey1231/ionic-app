@@ -8,8 +8,8 @@
 
 var app = angular.module('app', ['ionic', 'ion-autocomplete', 'ionic.service.core',  'ngCordova',  'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  //url:'http://localhost:8100/ionic'
-   url:'https://joey.smsvoip.nscook.net/ionic'
+  url:'http://localhost:8100/ionic'
+   // url:'https://mark.smsvoip.nscook.net/ionic'
 })
 .constant('ScaleDronePush', {
     channel_id: 'Not4yRVrFtQgNuDL'
@@ -27,10 +27,7 @@ var app = angular.module('app', ['ionic', 'ion-autocomplete', 'ionic.service.cor
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
-        }
-
-        
-        
+        }        
     });
 })
 
