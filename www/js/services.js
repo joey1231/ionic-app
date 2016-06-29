@@ -93,7 +93,7 @@ angular.module('app.services', [])
             });
         }
     }])
-    .service('ScaleDroneService', ['$http', function($http) {
+    .service('ScaleDroneService', ['$http', '$cordovaLocalNotification', function($http, $cordovaLocalNotification) {
         this.init = function(channel, ApiEndpoint, $scope, $state, user_id) {
             $http.get(ApiEndpoint.url + '/notification/getData', { params: { userid: user_id } }).success(function(data, status) {
             if (status == 200) {
@@ -116,6 +116,15 @@ angular.module('app.services', [])
 
                     room.on('data', function(data) {
                         if (data.event == "new_message") {
+                            console.log(data);
+                            $cordovaLocalNotification.schedule({
+                                id: "12345",
+                                message: data.payload.Body,
+                                title: "new message from " + data.payload.From,
+                                autoCancel: true
+                            }).then(function() {
+                                console.log("new message notification");
+                            });
                             if ($state.current.name == "tabsController.inbox") {
                                 $scope.loadInbox();
                             }
