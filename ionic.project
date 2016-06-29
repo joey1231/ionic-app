@@ -5,6 +5,7 @@
     {
       "path": "/ionic",
       "proxyUrl": "https://joey.smsvoip.nscook.net/ionic"
+
     }
   ],
   "gulpStartupTasks": [

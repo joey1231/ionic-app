@@ -9924,6 +9924,9 @@ img.attachment-img {
   font-size: 26px !important;
   font-weight: lighter !important; }
 
+#newMessageForm textarea {
+  height: 400px !important; }
+
 .user-profile {
   margin-right: 20px !important;
   -webkit-box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;

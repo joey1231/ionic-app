@@ -1,4 +1,6 @@
-controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send,Attachments) {
+
+controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send, ScaleDronePush,Attachments) {
+
     /**
      * get the user token 
      * @type {[type]}
@@ -12,7 +14,6 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
         number: '',
         message: '',
     };
-
 
     $scope.send = function(message) {
 
@@ -38,6 +39,37 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
             }
         });
     }
+
+    var contactAutocompleteData = {};
+
+    $scope.initContacts = function() {
+        $http.get(ApiEndpoint.url + '/allContact', { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+            if (status == 200) {
+                contactAutocompleteData = data.data;
+                console.log(data);
+            } else {
+                contactAutocompleteData = [];
+            }
+        });
+        console.log(contactAutocompleteData);
+    }
+
+    $scope.contactQuery = function(query, isInitializing) {
+        return {
+            contacts: $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).success(function() {
+                return data.data;
+            })
+        } 
+    }
+
+    $scope.selectedContacts = function(callback) {
+        console.log(callback);
+    }
+
+    $scope.removedContacts = function(callback) {
+        console.log(callback);
+    }
+
     $scope.sendMessage = function() {
         send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
     }

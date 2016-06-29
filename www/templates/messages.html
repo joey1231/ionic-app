@@ -1,12 +1,21 @@
 <ion-view title="Messages" id="page11" class=" ">
     <ion-content padding="true" class="has-header">
-        <form id="messages-form6" class="list ">
+        <form id="newMessageForm" class="list " ng-init="initContacts()">
             <label class="item item-input " id="messages-input10">
-                <span class="input-label">Number:</span>
-                <input type="tel" placeholder="" ng-model="message.number">
+                <input type="tel" ion-autocomplete placeholder="Number: " ng-model="message.number" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                   ng-model="contacts.autocomplete"
+                   item-value-key="id"
+                   item-view-value-key="name"
+                   items-method="contactQuery(query)"
+                   items-method-value-key="contacts"
+                   items-clicked-method="selectedContacts(callback)"
+                   items-removed-method="removedContacts(callback)"
+                   select-items-label="Select contacts..."
+                   selected-items-label="Selected:"
+                >
             </label>
             <label class="item item-input " id="messages-textarea8">
-                <span class="input-label">Message</span><textarea placeholder="" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
+                <textarea placeholder="Type Message" height="600" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
             </label>
         </form>
         <form id="newContact-form7" class="list ">
