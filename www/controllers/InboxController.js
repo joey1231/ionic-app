@@ -313,24 +313,11 @@ controllers.inboxCtrl = function(
         $scope.message = {
             'enabled': false,
         };
-        var sendMessage = send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", {
+        send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", {
             body: message,
             thread_key: $stateParams.thread_key,
             userid: $scope.user.id
         }, $scope, $state, cellphones, contacts, groups);
-
-        if (sendMessage == true) {
-            $scope.sendStatus = "sent";
-            console.log(data);
-            $scope.loadConversation();
-            $scope.message = {
-                'enabled': true,
-            };
-
-            $scope.input.message = "";
-            // $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
-        }
-
         event.preventDefault();
     };
 }

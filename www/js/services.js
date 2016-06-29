@@ -89,10 +89,6 @@ angular.module('app.services', [])
                     };
 
                     $scope.input.message = "";
-                    // $scope.sendStatus = "sent";
-                    // console.log(data);
-                    // $scope.loadConversation();
-                    // // $state.go('tabsController.conversation', { thread_key: data.data.thread_key });
                 }
             });
         }
