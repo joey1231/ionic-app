@@ -1,4 +1,4 @@
-controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint) {
+controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     $scope.profile = new Array();
     $scope.profile.forwarding_devices = new Array();
@@ -7,10 +7,13 @@ controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
         $http.get(
             ApiEndpoint.url + "/dashboard/profile", { params: { userid: $scope.user.id } }
         ).success(function(data) {
-
-            $scope.profile = data;
             console.log(data);
-        }).error(function(data, status, header, config) {});
+            $scope.profile = data;
+
+        }).error(function(data, status, header, config) {
+            console.log(data);
+
+        });
 
     }
 }

@@ -6,6 +6,23 @@ angular.module('app.services', [])
     .factory('ApiEndpoint', function() {
         return document.getElementsByName('ApiEndpoint')[0].getAttribute('content');
     })
+    .factory('CameraService', function($q) {
+
+        return {
+            getPicture: function(options) {
+                var q = $q.defer();
+
+                navigator.camera.getPicture(function(result) {
+                    q.resolve(result);
+                }, function(err) {
+                    q.reject(err);
+                }, options);
+
+                return q.promise;
+            }
+        }
+
+    })
     .service('LoginService', function($q, ApiEndpoint, $http, $ionicUser) {
 
         return {
