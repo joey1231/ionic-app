@@ -25,8 +25,7 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
 
     $scope.contact = [];
     $scope.getContact = function() {
-        $http.get(ApiEndpoint.url + '/contact/' + $stateParams.id, { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
-            if (status == 200) {
+        $http.get(ApiEndpoint.url + '/contact/' + $stateParams.id, { params: { userid: $scope.user.id } }).success(function(data, status, headers) {            if (status == 200) {
                 if (data.length == 0) {
                     $state.go('tabsController.contacts');
                 }
@@ -54,13 +53,23 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
         console.log(contactAutocompleteData);
     }
 
-    $scope.contactQuery = function(query, isInitializing) {
-        return {
-            contacts: $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).success(function() {
-                return data.data;
-            })
-        } 
+    $scope.contactQuery = function(query, isInitializing) { 
+        return $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).then(function(response) {
+            console.log(response.data.data);
+            return response.data.data; // response.data is the return json, response.data.data is array
+        }, function(error) {
+            alert(error);
+        });
     }
+
+    // $scope.contactQuery = function(query, isInitializing) {
+    //     return {
+    //         contacts: $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).success(function(data) {
+    //             console.log(data);
+    //             return data;
+    //         })
+    //     } 
+    // }
 
     $scope.selectedContacts = function(callback) {
         console.log(callback);
