@@ -4,7 +4,7 @@
   "proxies": [
     {
       "path": "/ionic",
-      "proxyUrl": "https://joey.smsvoip.nscook.net/ionic"
+      "proxyUrl": "https://mark.smsvoip.nscook.net/ionic"
 
     }
   ],
