@@ -69,7 +69,8 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
     $scope.removedContacts = function(callback) {
         console.log(callback);
     }
-
+    $scope.count =0;
+    $scope.filesAttach = new Array();
     $scope.sendMessage = function() {
         send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
     }
@@ -78,7 +79,8 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
             alert(uri);
             window.FilePath.resolveNativePath(uri, function(localFileUri) {
                 alert(localFileUri);
-                Attachments.attach($scope,localFileUri);
+                $scope.filesAttach[$scope.count++] = Attachments.attach($scope,localFileUri);
+                alert(JSON.stringify($scope.filesAttach));
             },function(error){
                 alert('error');
                 alert(error);

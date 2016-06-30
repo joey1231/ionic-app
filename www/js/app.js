@@ -8,8 +8,8 @@
 
 var app = angular.module('app', ['ionic','ionic.service.core', 'ion-autocomplete',   'ngCordova',  'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  url:'http://localhost:8100/ionic'
-   // url:'https://mark.smsvoip.nscook.net/ionic'
+  //url:'http://localhost:8100/ionic'
+    url:'https://mark.smsvoip.nscook.net/ionic'
 })
 .constant('ScaleDronePush', {
     channel_id: 'Not4yRVrFtQgNuDL'

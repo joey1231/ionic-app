@@ -24,6 +24,8 @@
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
     "cordova-plugin-filepath",
+    "com-badrit-base64",
+    "http://github.com/don/cordova-filechooser.git",
     {
       "variables": {
         "SENDER_ID": "5945676137"
