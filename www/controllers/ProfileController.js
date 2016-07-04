@@ -22,7 +22,7 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             ApiEndpoint.url + "/dashboard/profile", { params: { userid: $scope.user.id } }
         ).success(function(data) {
             $scope.profile=data;
-            $scope.profile.avatar = "https://joey.smsvoip.nscook.net/upload/profiles/"+$scope.profile.avatar;
+            $scope.profile.avatar = ApiEndpoint.baseUrl+"/upload/profiles/"+$scope.profile.avatar;
         }).error(function(data, status, header, config) {});
 
         $http.get(ApiEndpoint.url + '/plan/companies', { params: { userid: $scope.user.id } }).success(function(data, status, header) {
