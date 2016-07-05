@@ -1,4 +1,4 @@
-controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform,$cordovaFileTransfer,$cordovaCamera,CameraService) {
+controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform, $cordovaFileTransfer, $cordovaCamera, CameraService) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
 
@@ -21,8 +21,8 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
         $http.get(
             ApiEndpoint.url + "/dashboard/profile", { params: { userid: $scope.user.id } }
         ).success(function(data) {
-            $scope.profile=data;
-            $scope.profile.avatar = ApiEndpoint.baseUrl+"/upload/profiles/"+$scope.profile.avatar;
+            $scope.profile = data;
+            $scope.profile.avatar = ApiEndpoint.baseUrl + "/upload/profiles/" + $scope.profile.avatar;
         }).error(function(data, status, header, config) {});
 
         $http.get(ApiEndpoint.url + '/plan/companies', { params: { userid: $scope.user.id } }).success(function(data, status, header) {
@@ -68,17 +68,17 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
         });
 
     };
-    $scope.getExtension= function(path) {
-        var basename = path.split(/[\\/]/).pop(),  // extract file name from full path ...
-        // (supports `\\` and `/` separators)
-            pos = basename.lastIndexOf(".");       // get last position of `.`
+    $scope.getExtension = function(path) {
+        var basename = path.split(/[\\/]/).pop(), // extract file name from full path ...
+            // (supports `\\` and `/` separators)
+            pos = basename.lastIndexOf("."); // get last position of `.`
 
-        if (basename === "" || pos < 1)            // if file name is empty or ...
-            return "";                             //  `.` not found (-1) or comes first (0)
+        if (basename === "" || pos < 1) // if file name is empty or ...
+            return ""; //  `.` not found (-1) or comes first (0)
 
-        return basename.slice(pos + 1);            // extract extension ignoring `.`
+        return basename.slice(pos + 1); // extract extension ignoring `.`
     }
-    $scope.takePicture = function () {
+    $scope.takePicture = function() {
 
 
 
@@ -92,7 +92,7 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             targetHeight: 100,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false,
-            correctOrientation:true
+            correctOrientation: true
         };
 
         /*$cordovaCamera.getPicture(options).then(function(imageData) {
@@ -106,14 +106,14 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
                 title: 'Login e!',
                 template: imageData
             });
-             $scope.profile.avatar =imageData;
-            $scope.imageToUpload= imageData;
-         }, function(err) {
+            $scope.profile.avatar = imageData;
+            $scope.imageToUpload = imageData;
+        }, function(err) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login ers!',
                 template: err
             });
-         });
+        });
 
     };
     $scope.selectPicture = function() {
@@ -129,24 +129,24 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
                     title: 'Login e!',
                     template: imageURI
                 });
-                $scope.imageToUpload= imageURI
+                $scope.imageToUpload = imageURI
                 $scope.profile.avatar = imageURI
                 window.resolveLocalFileSystemURI(imageURI, function(fileEntry) {
                     $scope.picData = fileEntry.nativeURL;
                     $scope.ftLoad = true;
 
-                    $scope.imageToUpload= fileEntry.nativeURL;
+                    $scope.imageToUpload = fileEntry.nativeURL;
                     $scope.profile.avatar = fileEntry.nativeURL;
-                  /*  var image = document.getElementById('myImage');
-                    image.src = fileEntry.nativeURL;*/
+                    /*  var image = document.getElementById('myImage');
+                      image.src = fileEntry.nativeURL;*/
                 });
                 //$ionicLoading.show({template: 'Foto acquisita...', duration:500});
             },
-            function(err){
+            function(err) {
                 //$ionicLoading.show({template: 'Errore di caricamento...', duration:500});
             })
     };
-    $scope.imageToUpload ='';
+    $scope.imageToUpload = '';
     $scope.getImageSaveContact = function() {
         // Image picker will load images according to these settings
         var options = {
@@ -163,34 +163,34 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             });
             // Loop through acquired images
             for (var i = 0; i < results.length; i++) {
-                $scope.imageToUpload= results[i];
+                $scope.imageToUpload = results[i];
                 $scope.profile.avatar = results[i];
             }
         }, function(error) {
             console.log('Error: ' + JSON.stringify(error)); // In case of error
             var alertPopup = $ionicPopup.alert({
                 title: 'Error!',
-                template:  error.message
+                template: error.message
             });
         });
 
     };
-    $scope.updateProfile= function(){
+    $scope.updateProfile = function() {
 
         //$scope.profile.avatar = results[i];
-        var ext = $scope.getExtension( $scope.imageToUpload);
+        var ext = $scope.getExtension($scope.imageToUpload);
 
-        var type ="";
-        if(ext == "png"){
-            type ="image/png";
-        }else{
-            type ="image/jpg";
+        var type = "";
+        if (ext == "png") {
+            type = "image/png";
+        } else {
+            type = "image/jpg";
         }
 
 
         var options = new FileUploadOptions();
         options.fileKey = "file";
-        options.fileName =  $scope.imageToUpload.substr($scope.imageToUpload.lastIndexOf('/') + 1);
+        options.fileName = $scope.imageToUpload.substr($scope.imageToUpload.lastIndexOf('/') + 1);
         options.mimeType = type;
 
         var params = {};
@@ -199,18 +199,18 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
         options.params = params;
         var alertPopup = $ionicPopup.alert({
             title: 'Login array!',
-            template:   options.fileName
+            template: options.fileName
         });
 
 
-        try{
+        try {
             var ft = new FileTransfer();
-            ft.upload(  $scope.imageToUpload,ApiEndpoint.url + '/dashboard/profile-update-setting', function(data){
+            ft.upload($scope.imageToUpload, ApiEndpoint.url + '/dashboard/profile-update-setting', function(data) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Update profile picture',
                     template: data.message
                 });
-                $scope.imageToUpload='';
+                $scope.imageToUpload = '';
             }, function(error) {
 
                 var alertPopup = $ionicPopup.alert({
@@ -218,12 +218,11 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
                     template: error.message
                 });
             }, options);
-        }catch(ex){
+        } catch (ex) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Error updating profile',
-                template:  ex.message
+                template: ex.message
             });
         }
     }
 }
-
