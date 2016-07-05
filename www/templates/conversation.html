@@ -17,7 +17,7 @@
                         </ul>
                     </div>
                     <div class="message-detail">
-                        <!-- <span ng-click="viewProfile(message)" 
+                        <!-- <span ng-click="viewProfile(message)"
                             class="bold">detail</span> -->
                         <span am-time-ago="messages.created_at | amUtc"></span>
                     </div>
@@ -27,7 +27,11 @@
         </div>
     </ion-content>
     <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
+
+
         <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+            <input type="file" id="uploadFileId" style="display: none"/>
+            <button class="button button-icon icon ion-paperclip" ng-click="initUpload()" ></button>
             <label class="item-input-wrapper">
                 <textarea ng-model="input.message" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic ng-disabled="message.enabled==false"></textarea>
             </label>

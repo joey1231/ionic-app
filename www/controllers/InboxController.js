@@ -1,14 +1,14 @@
 controllers.inboxCtrl = function(
-    $scope, 
-    $state, 
-    $http, 
-    $stateParams, 
-    ApiEndpoint, 
-    send, 
-    $timeout, 
-    $ionicScrollDelegate, 
-    $ionicActionSheet, 
-    $cordovaToast, 
+    $scope,
+    $state,
+    $http,
+    $stateParams,
+    ApiEndpoint,
+    send,
+    $timeout,
+    $ionicScrollDelegate,
+    $ionicActionSheet,
+    $cordovaToast,
     ScaleDronePush,
     ScaleDroneService) {
 
@@ -17,7 +17,7 @@ controllers.inboxCtrl = function(
     }
 
     /**
-     * get the user token 
+     * get the user token
      * @type {[type]}
      */
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
@@ -25,7 +25,7 @@ controllers.inboxCtrl = function(
     /**
      * disable click when inbox action sheet is fired!
      * enable when cancel
-     * 
+     *
      * @type {Boolean}
      */
     $scope.clickEventDisabled = false;
@@ -184,7 +184,7 @@ controllers.inboxCtrl = function(
         $http.post(ApiEndpoint.url + "/communication/delete-thread", { thread_key: thread_key, userid: $scope.user.id }).success(function(data, status, header) {
             $cordovaToast.show(data.message, 'short', 'bottom').then(function(success) {
                 // success
-                
+
             }, function(error) {
                 // error
                 $state.reload();
@@ -308,7 +308,7 @@ controllers.inboxCtrl = function(
      */
     $scope.send = function(event, message, recipients) {
         var contacts = [];
-        
+
         angular.forEach(recipients.contacts, function(contact, key) {
             contacts.push(contact.id);
         });
@@ -331,4 +331,14 @@ controllers.inboxCtrl = function(
         }, $scope, $state, cellphones, contacts, groups);
         event.preventDefault();
     };
-}
+
+    /*
+    *
+    * upload file function
+    *
+    * */
+    $scope.initUpload = function() {
+        console.log()
+
+    }
+};
