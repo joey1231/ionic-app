@@ -27,8 +27,8 @@
         </div>
     </ion-content>
     <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
-        <button class="button button-icon icon ion-ios-plus-outline"></button>
         <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+            <button class="button button-icon icon ion-ios-plus-outline"></button>
             <label class="item-input-wrapper">
                 <textarea ng-model="input.message" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic ng-disabled="message.enabled==false"></textarea>
             </label>
