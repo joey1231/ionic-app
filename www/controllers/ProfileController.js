@@ -1,4 +1,17 @@
-controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $state, $stateParams, ApiEndpoint, $cordovaImagePicker, $ionicPlatform, $cordovaFileTransfer, $cordovaCamera, CameraService) {
+controllers.profileCtrl = function(
+    $scope, 
+    $http, 
+    $timeout, 
+    $q, 
+    $ionicPopup, 
+    $state, 
+    $stateParams, 
+    ApiEndpoint, 
+    $cordovaImagePicker, 
+    $ionicPlatform, 
+    $cordovaFileTransfer, 
+    $cordovaCamera, 
+    CameraService) {
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
 
