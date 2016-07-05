@@ -8,8 +8,8 @@
 
 var app = angular.module('app', ['ionic','ionic.service.core', 'ion-autocomplete',   'ngCordova',  'ionic.service.push', 'app.routes', 'app.services', 'app.directives', 'angularMoment'])
 .constant('ApiEndpoint', {
-  url:'http://localhost:8100/ionic',
-  //   url:'http://159.203.201.53/ionic',
+  //url:'http://localhost:8100/ionic'
+    url:'http://159.203.201.53/ionic',
     baseUrl:'http://159.203.201.53'
 })
 .constant('ScaleDronePush', {
@@ -18,7 +18,7 @@ var app = angular.module('app', ['ionic','ionic.service.core', 'ion-autocomplete
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-
+      
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -32,7 +32,7 @@ var app = angular.module('app', ['ionic','ionic.service.core', 'ion-autocomplete
 
     });
 
-});
+})
 
 
 
@@ -40,5 +40,5 @@ var controllers = {};
 
 controllers.parentController = function($scope, $state, $http, $rootScope, $ionicUser, $ionicPush, ApiEndpoint, ScaleDronePush) {
 
-
-};
+    
+}
