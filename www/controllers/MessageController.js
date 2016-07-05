@@ -1,5 +1,4 @@
-
-controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send, ScaleDronePush,Attachments) {
+controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndpoint, send, ScaleDronePush, Attachments) {
 
     /**
      * get the user token 
@@ -25,7 +24,8 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
 
     $scope.contact = [];
     $scope.getContact = function() {
-        $http.get(ApiEndpoint.url + '/contact/' + $stateParams.id, { params: { userid: $scope.user.id } }).success(function(data, status, headers) {            if (status == 200) {
+        $http.get(ApiEndpoint.url + '/contact/' + $stateParams.id, { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+            if (status == 200) {
                 if (data.length == 0) {
                     $state.go('tabsController.contacts');
                 }
@@ -53,8 +53,8 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
         console.log(contactAutocompleteData);
     }
 
-    $scope.contactQuery = function(query, isInitializing) { 
-        return $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query } ).then(function(response) {
+    $scope.contactQuery = function(query, isInitializing) {
+        return $http.post(ApiEndpoint.url + '/allContact', { userid: $scope.user.id, search: query }).then(function(response) {
             console.log(response.data.data);
             return response.data.data; // response.data is the return json, response.data.data is array
         }, function(error) {
@@ -78,19 +78,19 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
     $scope.removedContacts = function(callback) {
         console.log(callback);
     }
-    $scope.count =0;
+    $scope.count = 0;
     $scope.filesAttach = new Array();
     $scope.sendMessage = function() {
         send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
     }
-    $scope.fileChooseDialog= function () {
-        fileChooser.open(function(uri){
+    $scope.fileChooseDialog = function() {
+        fileChooser.open(function(uri) {
             alert(uri);
             window.FilePath.resolveNativePath(uri, function(localFileUri) {
                 alert(localFileUri);
-                $scope.filesAttach[$scope.count++] = Attachments.attach($scope,localFileUri);
+                $scope.filesAttach[$scope.count++] = Attachments.attach($scope, localFileUri);
                 alert(JSON.stringify($scope.filesAttach));
-            },function(error){
+            }, function(error) {
                 alert('error');
                 alert(error);
             });
