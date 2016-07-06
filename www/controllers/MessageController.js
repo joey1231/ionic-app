@@ -78,7 +78,7 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
     $scope.removedContacts = function(callback) {
         console.log(callback);
     }
-    
+
     $scope.file = "";
     $scope.$watch('file', function() {
         console.log($scope.file);
