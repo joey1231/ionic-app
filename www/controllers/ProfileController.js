@@ -225,5 +225,38 @@ controllers.profileCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             });
         }
     }
+    $scope.changePlan = function(stripe_id){
+           var confirmPopup = $ionicPopup.confirm({
+            title: 'Change Plan',
+            template: 'Are you sure you want to change with this plan?'
+        });
+        confirmPopup.then(function(res) {
+
+            if (res) {
+                      $http.post(
+                      ApiEndpoint.url + "/plan/change-plan", {plan_id: strip_id, userid: $scope.user.id}
+                ).success(function(data, status, header) {
+                    if (status == 200) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Change plan success!',
+                            template: data.message
+                        });
+                            $scope.init();
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Change plan failed!',
+                            template: data.message
+                        });
+                    }
+
+
+                }).error(function(data, status, header, config) {
+
+                });
+            } else {
+
+            }
+        });
+    }
 }
 
