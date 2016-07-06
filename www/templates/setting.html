@@ -14,7 +14,7 @@
              <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.phone_webrtc_enabled" >Phone WebRTC</ion-toggle>
              <ion-radio ng-model="profile.route_incoming_call" ng-value="1">Ring the devices enabled above</ion-radio>
              <ion-radio ng-model="profile.route_incoming_call" ng-value="2">Send incoming calls to voicemail</ion-radio>
-             <ion-radio ng-model="profile.route_incoming_call" ng-value="3">Disable incoming calls<</ion-radio>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="3">Disable incoming calls</ion-radio>
             <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.transcribe_voicemail" >Transcribe voicemail</ion-toggle>
            
 
@@ -22,18 +22,25 @@
         <div class="spacer" style="width: 300px; height: 23px;"></div>
         <ion-list id="setting-list5" class=" ">
             <ion-item class="item-divider " id="setting-list-item-divider5">Message Settings</ion-item>
-            <ion-item class="item item-icon-right" >Forward Incoming<i class="icon ion-checkmark-circled balanced" ng-if="profile.forward_incoming_message==1"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.forward_incoming_message==0"></i></ion-item>
-            <ion-item class="item item-icon-right" >Enable Sound Notifications<i class="icon ion-checkmark-circled balanced" ng-if="profile.sound_notification==1"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.sound_notification==0"></i></ion-item>
-            <ion-item class="item item-icon-right" >Enable desktop notifications for this computer<i class="icon ion-checkmark-circled balanced" ng-if="profile.desktop_notification==1"> <i class="icon assertive ion-close-circled"  ng-if="profile.desktop_notification==0"></i></i></ion-item>
-            <ion-item class="item item-icon-right" >Hide Link in Bulk Messages<i class="icon ion-checkmark-circled balanced" ng-if="profile.hide_link_bulk_message==1"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.hide_link_bulk_message==0"></i></ion-item>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.forward_incoming_message" >Forward Incoming</ion-toggle>
+           
+           <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.sound_notification" >Enable Sound Notifications</ion-toggle>
+
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.desktop_notification" >Enable desktop notifications for this computer</ion-toggle>
+
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.hide_link_bulk_message" >Hide Link in Bulk Messages</ion-toggle>
+
+           
 
             <label class="item item-input " id="setting-textarea3">
-                <span class="input-label">Signature</span><textarea placeholder="" disabled="disabled" ng-model="profile.message_signature"></textarea>
+                <span class="input-label">Signature</span><textarea placeholder=""  ng-model="profile.message_signature"></textarea>
             </label>
-            <ion-item class="item item-icon-right" >Disable Incoming Messages<i class="icon ion-checkmark-circled balanced" ng-if="profile.disable_incoming_message==1"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.disable_incoming_message==0"></i></ion-item>
+            
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.disable_incoming_message" >Disable Incoming Messages</ion-toggle>
+         
 
             <label class="item item-input " id="setting-textarea4">
-                <span class="input-label">Auto-Response</span><textarea placeholder="" disabled="disabled" ng-model="profile.auto_response_message"></textarea>
+                <span class="input-label">Auto-Response</span><textarea placeholder=""  ng-model="profile.auto_response_message"></textarea>
             </label>
 
 
