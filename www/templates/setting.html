@@ -12,10 +12,11 @@
             <ion-item class="item-divider " id="setting-list-item-divider4">Phone Settings</ion-item>
             <!--<ion-item class="item item-icon-right" >Phone WebRTC  <i class="icon assertive ion-close-circled"  ng-if="profile.phone_webrtc_enabled!=1"></i> <i class="icon ion-checkmark-circled balanced" ng-if="profile.phone_webrtc_enabled==1"></i> </ion-item>-->
              <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.phone_webrtc_enabled" >Phone WebRTC</ion-toggle>
-            <ion-item class="item item-icon-right" >Ring the devices enabled above <i class="icon ion-checkmark-circled balanced" ng-if="profile.route_incoming_call==1"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.route_incoming_call!=1"></i></ion-item>
-            <ion-item class="item item-icon-right" >Send incoming calls to voicemail <i class="icon ion-checkmark-circled balanced" ng-if="profile.route_incoming_call==2"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.route_incoming_call!=2"></i></ion-item>
-            <ion-item class="item item-icon-right" >Disable incoming calls<i class="icon ion-checkmark-circled balanced" ng-if="profile.route_incoming_call==3"></i> <i class="icon assertive ion-close-circled"  ng-if="profile.route_incoming_call != 3"></i></ion-item>
-            <ion-item class="item item-icon-right" >Transcribe voicemail<i class="icon ion-checkmark-circled balanced" ng-if="profile.transcribe_voicemail==1"></i> <i class="icon assertive ion-close-circled" ng-if="profile.transcribe_voicemail!=1"></i></ion-item>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="1">Ring the devices enabled above</ion-radio>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="2">Send incoming calls to voicemail</ion-radio>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="3">Disable incoming calls<</ion-radio>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="profile.transcribe_voicemail" >Transcribe voicemail</ion-toggle>
+           
 
         </ion-list>
         <div class="spacer" style="width: 300px; height: 23px;"></div>
