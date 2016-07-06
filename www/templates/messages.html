@@ -13,10 +13,10 @@
             <ion-item class="item-divider " id="newContact-list-item-divider6">Attachments</ion-item>
             <ion-list id="contacts-list2" class=" "  >
 
-                <ion-item class="item-avatar item item-icon-right "   id="contacts-list-item9">
+                <ion-item class="item-avatar item item-icon-right " ng-repeat="file in filesAttach"   id="contacts-list-item9">
 
-                    Phone Number
-                    <i class="icon ion-checkmark-circled balanced"></i>
+                    {{file.name}}
+                   <i class="icon ion-close assertive" ng-click="removeAttach($index)"></i>
 
                 </ion-item>
 

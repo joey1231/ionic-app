@@ -87,7 +87,8 @@ angular.module('app.services', [])
                     var ft = new FileTransfer();
                     ft.upload(  $fileUrl,ApiEndpoint.url + '/attachment', function(data,status){
                         alert(JSON.stringify(data));
-                        return data;
+                       $scope.filesAttach.push(data);
+                       // return data;
                     }, function(error) {
                         alert(JSON.stringify(error))
                         return error;
@@ -112,7 +113,12 @@ angular.module('app.services', [])
     })
     .service('send', ['$http', function($http) {
         this.sendSingle = function(url, message, $scope, $state) {
-            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number] }).success(function(data, status, header) {
+            var attachment= new Array();
+            if( typeof $scope.filesAttach !== 'undefined' || $scope.filesAttach !== null ){
+                attachment =  $scope.filesAttach;
+            }
+            console.log(attachment);
+            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number],attachments:attachment  }).success(function(data, status, header) {
                 if (status == 200) {
                     $scope.sendStatus = "sent";
                     $state.go('tabsController.inbox');
@@ -120,9 +126,12 @@ angular.module('app.services', [])
             });
         }
         this.sendMultiple = function(url, message, $scope, $state, cellphones, contacts, groups) {
-
-
-            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: contacts, groups: groups, cellphones: cellphones }).success(function(data, status, header) {
+            var attachment= new Array();
+            if( typeof $scope.filesAttach !== 'undefined' || $scope.filesAttach !== null ){
+                 attachment =  $scope.filesAttach;
+            }
+            console.log(attachment);
+            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: contacts, groups: groups, cellphones: cellphones,  attachments:attachment }).success(function(data, status, header) {
                 if (status == 200) {
                     $scope.sendStatus = "sent";
                     console.log(data);
