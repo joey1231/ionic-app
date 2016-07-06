@@ -27,7 +27,8 @@
     "com-badrit-base64",
     "http://github.com/don/cordova-filechooser.git",
     "cordova-plugin-camera"
-
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
