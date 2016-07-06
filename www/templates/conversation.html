@@ -31,12 +31,15 @@
             <input 
                 type="file" 
                 id="uploadFileButton" 
-                ngf-select="uploadFiles()"
+                ngf-select="uploadFiles($file, $invalidFiles)"
                 ngf-max-heigh="1000"
                 ngf-max-size="1MB"
                 style="display: none"
             />
             <button class="button button-icon icon ion-ios-plus-outline" onclick="document.getElementById('uploadFileButton').click();"></button>
+            <div>
+                <p>{{file_name}}</p>
+            </div>
             <label class="item-input-wrapper">
                 <textarea ng-model="input.message" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic ng-disabled="message.enabled==false"></textarea>
             </label>

@@ -11,7 +11,8 @@ controllers.inboxCtrl = function(
     $cordovaToast,
     ScaleDronePush,
     ScaleDroneService,
-    Upload) {
+    Upload, 
+    $timeout) {
 
     $scope.input = {
         message: ""
@@ -333,22 +334,43 @@ controllers.inboxCtrl = function(
         event.preventDefault();
     };
 
+    $scope.file_name = "";
+    $scope.filesAttach = new Array();
+
+
+    $scope.clearAll = function() {
+        $scope.file_name = "";
+        $scope.filesAttach = new Array();      
+        $scope.message = true;  
+    }
+
     /*
      * upload file function
      */
-    $scope.uploadFiles = function() {
-        $scope.uploadFiles = function(file, errFiles) {
+    $scope.uploadFiles = function(file, errFiles) {
         $scope.f = file;
+
+        $scope.file_name = file.name;
+
         $scope.errFile = errFiles && errFiles[0];
         if (file) {
             file.upload = Upload.upload({
-                url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                data: {file: file}
+                url: ApiEndpoint.url + '/attachment',
+                data: {
+                    file1: file,
+                    userid: $scope.user.id
+                }
             });
-
+             console.log(file)
             file.upload.then(function (response) {
+                console.log("outside timeout");
                 $timeout(function () {
                     file.result = response.data;
+                    console.log(response.data);
+                    angular.forEach(response.data.attachment, function(data) {
+                        $scope.filesAttach.push(data);
+                    });
+                    console.log("inside timeout");
                 });
             }, function (response) {
                 if (response.status > 0)
@@ -357,6 +379,5 @@ controllers.inboxCtrl = function(
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         }   
-    }
     }
 };
