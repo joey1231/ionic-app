@@ -18,8 +18,8 @@ var app = angular.module('app', [
     'angularMoment',
     'ngFileUpload'])
     .constant('ApiEndpoint', {
-        url: 'http://localhost:8100/ionic',
-        // url: 'http://159.203.201.53/ionic',
+        //url: 'http://localhost:8100/ionic',
+        url: 'http://159.203.201.53/ionic',
         baseUrl:'http://159.203.201.53'
     })
     .constant('ScaleDronePush', {
