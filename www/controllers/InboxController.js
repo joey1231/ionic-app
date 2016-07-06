@@ -353,6 +353,7 @@ controllers.inboxCtrl = function(
         $scope.file_name = file.name;
 
         $scope.errFile = errFiles && errFiles[0];
+
         if (file) {
             file.upload = Upload.upload({
                 url: ApiEndpoint.url + '/attachment',
@@ -361,20 +362,23 @@ controllers.inboxCtrl = function(
                     userid: $scope.user.id
                 }
             });
-             console.log(file)
+
             file.upload.then(function (response) {
-                console.log("outside timeout");
+
                 $timeout(function () {
+
                     file.result = response.data;
-                    console.log(response.data);
                     angular.forEach(response.data.attachment, function(data) {
                         $scope.filesAttach.push(data);
                     });
-                    console.log("inside timeout");
+
                 });
+
             }, function (response) {
-                if (response.status > 0)
+
+                if (response.status > 0) {
                     $scope.errorMsg = response.status + ': ' + response.data;
+                }
             }, function (evt) {
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
