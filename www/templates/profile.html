@@ -57,11 +57,11 @@
 
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Plan Information</ion-item>
-            <ion-list id="contacts-list2" class=" "  ng-repeat="plan in plans" ng-if="plan.stripe_id==subscribe_to">
+            <ion-list id="contacts-list2" class=" "  ng-repeat="plan in plans" >
 
 
 
-
+                      <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id==subscribe_to">{{plan.stripe_name}}</ion-item>
 
                     <ion-item class="item-avatar item item-icon-right "   id="contacts-list-item9">
 
@@ -162,6 +162,9 @@
 
                 </ion-item>
 
+                     <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id==subscribe_to">Current Plan</ion-item>
+                      <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id!=subscribe_to">Change Plan</ion-item>
+                       <div class="spacer" style="width: 300px; height: 23px;"></div>
 
                 </ion-list>
 
