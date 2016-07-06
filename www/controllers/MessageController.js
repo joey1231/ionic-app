@@ -78,17 +78,20 @@ controllers.messagesCtrl = function($scope, $state, $http, $stateParams, ApiEndp
 
         $scope.removedContacts = function(callback) {
             console.log(callback);
-        } << << << < HEAD
+        } 
+
         $scope.count = 0; === === =
         $scope.file = "";
         $scope.$watch('file', function() {
             console.log($scope.file);
         });
-        $scope.count = 0; >>> >>> > a3a62ac687f7425139e4ac475efed1e5490e79c9
+        $scope.count = 0; 
         $scope.filesAttach = new Array();
         $scope.sendMessage = function() {
             send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", $scope.message, $scope, $state, [], [$scope.contact.id], []);
-        } << << << < HEAD
+        }
+
+
         $scope.fileChooseDialog = function() {
                 fileChooser.open(function(uri) {
                             alert(uri);
