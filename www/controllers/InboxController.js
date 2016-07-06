@@ -1,23 +1,25 @@
 controllers.inboxCtrl = function(
-    $scope, 
-    $state, 
-    $http, 
-    $stateParams, 
-    ApiEndpoint, 
-    send, 
-    $timeout, 
-    $ionicScrollDelegate, 
-    $ionicActionSheet, 
-    $cordovaToast, 
+    $scope,
+    $state,
+    $http,
+    $stateParams,
+    ApiEndpoint,
+    send,
+    $timeout,
+    $ionicScrollDelegate,
+    $ionicActionSheet,
+    $cordovaToast,
     ScaleDronePush,
-    ScaleDroneService) {
+    ScaleDroneService,
+    Upload, 
+    $timeout) {
 
     $scope.input = {
         message: ""
     }
 
     /**
-     * get the user token 
+     * get the user token
      * @type {[type]}
      */
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
@@ -25,7 +27,7 @@ controllers.inboxCtrl = function(
     /**
      * disable click when inbox action sheet is fired!
      * enable when cancel
-     * 
+     *
      * @type {Boolean}
      */
     $scope.clickEventDisabled = false;
@@ -184,7 +186,7 @@ controllers.inboxCtrl = function(
         $http.post(ApiEndpoint.url + "/communication/delete-thread", { thread_key: thread_key, userid: $scope.user.id }).success(function(data, status, header) {
             $cordovaToast.show(data.message, 'short', 'bottom').then(function(success) {
                 // success
-                
+
             }, function(error) {
                 // error
                 $state.reload();
@@ -308,7 +310,7 @@ controllers.inboxCtrl = function(
      */
     $scope.send = function(event, message, recipients) {
         var contacts = [];
-        
+
         angular.forEach(recipients.contacts, function(contact, key) {
             contacts.push(contact.id);
         });
@@ -331,4 +333,55 @@ controllers.inboxCtrl = function(
         }, $scope, $state, cellphones, contacts, groups);
         event.preventDefault();
     };
-}
+
+    $scope.file_name = "";
+    $scope.filesAttach = new Array();
+
+
+    $scope.clearAll = function() {
+        $scope.file_name = "";
+        $scope.filesAttach = new Array();      
+        $scope.message = true;  
+    }
+
+    /*
+     * upload file function
+     */
+    $scope.uploadFiles = function(file, errFiles) {
+        $scope.f = file;
+
+        $scope.file_name = file.name;
+
+        $scope.errFile = errFiles && errFiles[0];
+
+        if (file) {
+            file.upload = Upload.upload({
+                url: ApiEndpoint.url + '/attachment',
+                data: {
+                    file1: file,
+                    userid: $scope.user.id
+                }
+            });
+
+            file.upload.then(function (response) {
+
+                $timeout(function () {
+
+                    file.result = response.data;
+                    angular.forEach(response.data.attachment, function(data) {
+                        $scope.filesAttach.push(data);
+                    });
+
+                });
+
+            }, function (response) {
+
+                if (response.status > 0) {
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                }
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+        }   
+    }
+};
