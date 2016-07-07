@@ -1,20 +1,19 @@
-<ion-view title="Profile" id="page10" class=" "  ng-init="init()" cache-view="false">
+<ion-view title="Profile" id="page10" class=" " ng-init="init()" cache-view="false">
     <ion-content padding="true" class="has-header">
-           <form id="newContact-form7" class="list ">
+        <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6"> Profile Information</ion-item>
             <ion-item class="item-avatar item item-icon-left item-icon-right" id="setting-list-item24">
                 <i class="icon ion-ios-contact" ng-if="profile.avatar==null || profile.avatar==''"></i>
                 <i class="icon" ng-if="profile.avatar!= null || profile.avatar!=''"><img ng-show="profile.avatar= != undefined" ng-src="{{profile.avatar}}" class="user-profile"></i>
                 <h2><i class="ios-contact-outline"></i>Avatar</h2>
-                <a ng-click="getImageSaveContact()">Change your avatar</a><br/>
+                <a ng-click="getImageSaveContact()">Change your avatar</a>
+                <br/>
                 <a ng-click="takePicture()">Take picture</a>
                 <i class="icon" ng-if="imageToUpload !=''"><button class="button button-positive   button-block " ng-click="updateProfile()">Update</button></i>
-
             </ion-item>
             <label class="item item-input " id="newContact-input13">
-
                 <span class="input-label">Name</span>
-                <input type="text" placeholder="" ng-model="user.name" >
+                <input type="text" placeholder="" ng-model="user.name">
             </label>
             <label class="item item-input " id="newContact-input13">
                 <span class="input-label">Email</span>
@@ -22,9 +21,8 @@
             </label>
             <label class="item item-input " id="newContact-input13">
                 <span class="input-label">Personal Cell</span>
-                <input type="text" placeholder="" ng-model="user.cellphone" >
+                <input type="text" placeholder="" ng-model="user.cellphone">
             </label>
-
         </form>
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Company Information</ion-item>
@@ -32,9 +30,7 @@
                 <span class="input-label">Name</span>
                 <input type="text" placeholder="" ng-model="company.company_name" ng-disabled="user.is_owner==0">
             </label>
-
         </form>
-
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Change Password</ion-item>
             <label class="item item-input " id="login-input25">
@@ -50,131 +46,78 @@
                 <input type="password" placeholder="Enter Confirm Password" ng-model="password.confirm">
             </label>
             <div id="newContact-button-bar4" class=" button-bar ">
-
                 <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="updatepassword()">Save</button>
             </div>
         </form>
-
         <form id="newContact-form7" class="list ">
             <ion-item class="item-divider " id="newContact-list-item-divider6">Plan Information</ion-item>
-            <ion-list id="contacts-list2" class=" "  ng-repeat="plan in plans" >
-
-
-
-                      <ion-item class="item-divider " id="newContact-list-item-divider6" >{{plan.stripe_name}}</ion-item>
-
-                    <ion-item class="item-avatar item item-icon-right "   id="contacts-list-item9">
-
-
-                            Phone Number
-                            <i class="icon ion-checkmark-circled balanced"></i>
-
-
-
-
-                    </ion-item>
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+            <ion-list id="contacts-list2" class=" " ng-repeat="plan in plans">
+                <ion-item class="item-divider " id="newContact-list-item-divider6">{{plan.stripe_name}}</ion-item>
+                <ion-item class="item-avatar item item-icon-right " id="contacts-list-item9">
+                    Phone Number
+                    <i class="icon ion-checkmark-circled balanced"></i>
+                </ion-item>
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         SMS Per Month
                         <i class="icon balanced">{{ plan.sms_count }}</i>
-
                     </div>
-
-
                 </ion-item>
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         Minutes Call Per Month
                         <i class="icon balanced">{{ plan.minutes_count }}</i>
-
                     </div>
-
-
                 </ion-item>
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         Max Recipients Per SMS
                         <i class="icon balanced">{{ plan.max_recipients }}</i>
-
                     </div>
-
-
                 </ion-item>
-
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         MMS
                         <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.mms_enabled==1"> </i>
-                        <i class="icon assertive ion-close-circled"  ng-if="plan.mms_enabled==0"></i>
-
+                        <i class="icon assertive ion-close-circled" ng-if="plan.mms_enabled==0"></i>
                     </div>
-
-
                 </ion-item>
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         Voice Mail
                         <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.voicemail_enabled==1"> </i>
-                        <i class="icon assertive ion-close-circled"  ng-if="plan.voicemail_enabled==0"></i>
-
+                        <i class="icon assertive ion-close-circled" ng-if="plan.voicemail_enabled==0"></i>
                     </div>
-
-
                 </ion-item>
-
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         API Integrations
                         <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.api_enabled==1"> </i>
-                        <i class="icon assertive ion-close-circled"  ng-if="plan.api_enabled==0"></i>
-
+                        <i class="icon assertive ion-close-circled" ng-if="plan.api_enabled==0"></i>
                     </div>
-
-
                 </ion-item>
-
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         Conference
                         <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.conference_enabled==1"> </i>
-                        <i class="icon assertive ion-close-circled"  ng-if="plan.conference_enabled==0"></i>
-
+                        <i class="icon assertive ion-close-circled" ng-if="plan.conference_enabled==0"></i>
                     </div>
-
-
                 </ion-item>
-                <ion-item class="item-avatar  item item-icon-right "   id="contacts-list-item9">
-
+                <ion-item class="item-avatar  item item-icon-right " id="contacts-list-item9">
                     <div class="col col-100">
                         Custom Setup and Training
                         <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.support_enabled==1"> </i>
-                        <i class="icon assertive ion-close-circled"  ng-if="plan.support_enabled==0"></i>
-
+                        <i class="icon assertive ion-close-circled" ng-if="plan.support_enabled==0"></i>
                     </div>
-
-
                 </ion-item>
-
-                     <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id==subscribe_to">Current Plan</ion-item>
-                      <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id!=subscribe_to"><button class="button button-balanced  button-block" ng-click="changePlan(plan.stripe_id)">Change Plan</button></ion-item>
-                       <div class="spacer" style="width: 300px; height: 23px;"></div>
-
-                </ion-list>
-
-
+                <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id==subscribe_to">Current Plan</ion-item>
+                <ion-item class="item-divider " id="newContact-list-item-divider6" ng-if="plan.stripe_id!=subscribe_to">
+                    <button class="button button-balanced  button-block" ng-click="changePlan(plan.stripe_id)">Change Plan</button>
                 </ion-item>
-
-
+                <div class="spacer" style="width: 300px; height: 23px;"></div>
             </ion-list>
-
-
+            </ion-item>
+            </ion-list>
         </form>
     </ion-content>
 </ion-view>
