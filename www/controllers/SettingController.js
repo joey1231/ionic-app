@@ -37,6 +37,6 @@ controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             'disable_incoming_message':$scope.profile.disable_incoming_message == 1 ? true:false,
             'transcribe_voicemail':$scope.profile.transcribe_voicemail == 1 ? true:false,
          }
-         console.log($scope.toggle_setting);
+      
     }
 }
