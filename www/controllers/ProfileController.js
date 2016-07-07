@@ -19,6 +19,18 @@ controllers.profileCtrl = function(
     $scope.company = {
         company_name: ''
     };
+
+    /**
+     * customers usage
+     * 
+     * total send messages
+     * total minutes
+     */
+    $scope.usages = {
+        messages: 0,
+        minutes: 0
+    }
+
     $scope.profile = new Array();
     $scope.profile.forwarding_devices = new Array();
     $scope.plans = {};
@@ -48,6 +60,30 @@ controllers.profileCtrl = function(
         });
     }
     $scope.password = { old: '', new: '', confirm: '', userid: $scope.user.id, };
+
+    $scope.initUsages = function() {
+
+        // calling singleUsage API
+        $http.get(ApiEndpoint.url + '/singleUsage', {
+            params: {
+                userid: $scope.user.id
+            }
+        }).success(function(response, status, headers) {
+            if (status == 200) {
+                if (response.data.messages_spent_month != 0) {
+                    $scope.usages.messages = response.data.messages_spent_month + " totals messages sent"
+                } else {
+                    $scope.usages.messages = "n/a"
+                }
+
+                if (response.data.minutes_spent_month != 0) {
+                    $scope.usages.minutes = response.data.minutes_spent_month + " total minutes"
+                } else {
+                    $scope.usages.minutes = "n/a"
+                }
+            }
+        });
+    }
 
     //Post toUpdate password
     $scope.updatepassword = function() {
