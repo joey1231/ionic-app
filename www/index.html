@@ -1,17 +1,28 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <meta content="ionic" name="baseUrl"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; *; style-src &apos;self&apos; &apos;unsafe-inline&apos; *">
+
+    <meta content="ionic" name="baseUrl">
     <title></title>
 
       <script src="scripts/platformOverrides.js"></script>
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+    <script src="lib/angular-websocket/dist/angular-websocket.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ionic-service-core/ionic-core.js"></script>
+    <script src="lib/ionic-service-push/ionic-push.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+
+    <!--<script src="lib/ng-cordova-master/ng-cordova.min.js"></script>-->
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+  <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -19,6 +30,11 @@
     <!-- include moment -->
     <script src="js/moment/moment.js"></script>
     <script src="js/moment/angular-moment.js"></script>
+
+
+    <!-- ion-autocomplete -->
+    <script src="lib/ion-autocomplete/dist/ion-autocomplete.js"></script>
+    <link href="lib/ion-autocomplete/dist/ion-autocomplete.css" rel="stylesheet">
     
 
     <style type="text/css">
@@ -41,8 +57,16 @@
         border-right: 0px;
       }
     </style>
+    
 
+    <script src="js/ng-file-upload/ng-file-upload-shim.min.js"></script>
+    <script src="js/ng-file-upload/ng-file-upload.min.js"></script>
+
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
     <script src="js/app.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
     <script src="controllers/ContactController.js"></script>
     <script src="controllers/GroupController.js"></script>
     <script src="controllers/InboxController.js"></script>
@@ -52,9 +76,6 @@
     <script src="controllers/SettingController.js"></script>
     <script src="controllers/SignupController.js"></script>
     <script src="js/controllers.js"></script>
-    <script src="js/routes.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
 
 
     <!-- Only required for Tab projects w/ pages in multiple tabs 
@@ -64,7 +85,7 @@
   </head>
   <body ng-app="app" animation="slide-left-right-ios7">
   <div>
-    <div>
+    <div ng-controller="parentController">
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button class="button-icon icon ion-ios-arrow-back">Back</ion-nav-back-button>
         </ion-nav-bar>

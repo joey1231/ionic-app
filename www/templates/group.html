@@ -3,7 +3,7 @@
         <form id="contacts-form2" class="list ">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="">
+                <input type="search" placeholder="" ng-model="search">
             </label>
             <div id="contacts-button-bar2" class=" button-bar ">
                 <a ui-sref="tabsController.newGroup" id="contacts-button4"
@@ -17,7 +17,7 @@
 
 
 
-            <ion-item class="item-avatar  " ng-repeat="group in groups"  id="contacts-list-item9">
+            <ion-item class="item-avatar  " ng-repeat="group in groups | filter:search"  id="contacts-list-item9">
 
                     <a style="text-decoration:none" ui-sref="viewGroups({id: {{group.id}} })" id="tabsController-group-view">
                         <div class="col col-100">
@@ -27,7 +27,6 @@
 
                 </div>
             </ion-item>
-
 
         </ion-list>
     </ion-content>

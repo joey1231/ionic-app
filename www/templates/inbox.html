@@ -1,8 +1,8 @@
-<ion-view title="Inbox" id="page8" class=" ">
-    <ion-content padding="true" class="has-header">
+<ion-view  cache-view="true" title="Inbox" id="page8" class=" ">
+    <ion-content padding="true" class="has-header" ng-init="initInbox()">
         <a ui-sref="tabsController.messages" id="inbox-button11" class=" button button-positive  button-block icon-right ion-compose ">New Message</a>
         <ion-list id="inbox-list1" class=" ">
-            <ion-item ng-repeat="thread in inbox" class="item-icon-right positive  " ui-sref="tabsController.conversation({thread_key: thread.thread_key})" id="inbox-list-item{{ thread.id }}">
+            <ion-item ng-repeat="thread in inbox" class="item-icon-right positive  " ng-class="toggleReadClass(thread.unread)" ng-disabled="clickEventDisabled" ng-click="go(thread.thread_key)" id="inbox-list-item{{ thread.id }}" on-hold="showInboxAction($event, thread)">
             <span class="inbox-thread-time">10:15</span>
             {{ thread.body }}
                 <span class="item-note inbox-thread-recipient">
@@ -11,7 +11,7 @@
                     </span>
                 </span>
 
-                <i class="icon ion-android-star-outline" ng-click="toggleStar()"></i>
+                <i class="icon  starred" ng-class="toggleStarClass(thread.starred)"></i>
             </ion-item>
         </ion-list>
     </ion-content>

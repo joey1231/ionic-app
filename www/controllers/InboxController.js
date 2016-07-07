@@ -1,80 +1,282 @@
-controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $timeout, $ionicScrollDelegate) {
+controllers.inboxCtrl = function(
+    $scope,
+    $state,
+    $http,
+    $stateParams,
+    ApiEndpoint,
+    send,
+    $timeout,
+    $ionicScrollDelegate,
+    $ionicActionSheet,
+    $cordovaToast,
+    ScaleDronePush,
+    ScaleDroneService,
+    Upload, 
+    $timeout) {
 
-	/**
-	 * get the user token 
-	 * @type {[type]}
-	 */
-	$scope.user = JSON.parse(window.localStorage.getItem('user'));
+    $scope.input = {
+        message: ""
+    }
 
-	/**
-	 * inbox function
-	 * @return {[function]} [loads inbox messages]
-	 */
-	$scope.inbox = function() {
+    /**
+     * get the user token
+     * @type {[type]}
+     */
+    $scope.user = JSON.parse(window.localStorage.getItem('user'));
 
-		// new inbox array
-		$scope.inbox = new Array();
+    /**
+     * disable click when inbox action sheet is fired!
+     * enable when cancel
+     *
+     * @type {Boolean}
+     */
+    $scope.clickEventDisabled = false;
 
-		// getting inbox data
-		$http.get(baseUrl + '/communication/inbox', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
-            
+    /**
+     * inbox function
+     * @return {[function]} [loads inbox messages]
+     */
+    $scope.loadInbox = function() {
+
+        // new inbox array
+        $scope.inbox = new Array();
+
+        // getting inbox data
+        $http.get(ApiEndpoint.url + '/communication/inbox', { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+
             // check request status
             if (status == 200) {
 
-            	// passing data into $scioe variable
+                // passing data into $scioe variable
                 $scope.inbox = data;
             } else {
-            	// todo
+                // todo
             }
         });
-	}
+    }
 
-	/**
-	 * initiate inbox
-	 */
-	$scope.inbox();
+    /**
+     * initiate inbox
+     */
+    // $scope.loadInbox();
+
+    $scope.initInbox = function() {
+        $scope.loadInbox();
+        ScaleDroneService.init(ScaleDronePush.channel_id, ApiEndpoint, $scope, $state, $scope.user.id);
+    }
+
+    /**
+     * goto conversation
+     */
+    $scope.go = function(thread_key) {
+
+        $http.post(ApiEndpoint.url + "/communication/unread", {
+            thread_key: thread_key,
+            unread: 0,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+            if (status == 200) {
+                $scope.loadInbox();
+            }
+        });
+
+    	// 'tabsController.conversation({thread_key: thread.thread_key})'
+    	$state.go('tabsController.conversation', {thread_key: thread_key});
+    }
 
 
-	/**
-	 * loads conversation messages
-	 * @return {[type]} [description]
-	 */
-	$scope.converstaion = function() {
+    /**
+     * on-hold event (longpress)
+     * return actionsheet
+     */
+    $scope.showInboxAction = function(event, thread) {
 
-		var viewScroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
+    	/**
+    	 * disable ng-click when ng-hold is fired
+    	 * @type {Boolean}
+    	 */
+    	$scope.clickEventDisabled = true;
 
-		// conversation new array
-		$scope.conversations = new Array();
+    	/**
+    	 * inbox actions
+    	 * event ng-hold
+    	 */
+        $ionicActionSheet.show({
+            buttons: [
+                { text: 'Read/Unread' },
+                { text: 'Star/Unstar' }
+            ],
+            destructiveText: 'Delete',
+            destructiveButtonClicked: function() {
+                // do stuff
+                $scope.deleteThread(thread.thread_key);
+                return true;
+            },
+            titleText: 'Inbox action',
+            cancelText: 'Cancel',
+            cancel: function() {
+                // add cancel code..
+                $scope.clickEventDisabled = false;
+            },
+            buttonClicked: function(index) {
+            	switch (index) {
+            		case 0:
+            			// toogling read/unread
+            			$scope.toggleRead(thread.thread_key, thread.unread);
+            		break;
+            		case 1:
+            			// toggling star/unstar
+            			$scope.toggleStar(thread.thread_key, thread.starred);
+            		break;
+            	}
+            	// $cordovaToast.show("not yet implemented", 'short', 'bottom');
+                return true;
+            }
+        });
 
-		// getting conversation data
-		$http.get(baseUrl + '/communication/exchange/' + $stateParams.thread_key, {params:{userid:$scope.user.id}}).success(function(data, status, header) {
-			
-			// passing it tru $scope
-			$scope.conversations =data.data.conversations;
+        event.preventDefault();
 
-			// setting title for the conversation
-			var title = "";
+        event.stopPropagation();
+    }
 
-			// looping all recipient for the formated title
-			angular.forEach($scope.getRecipients(data.data.recipients), function(d, k) {
-				title += d + ", ";
-			});
-			
-			// conversation title from recipient
-			$scope.title = title.substring(0, title.length - 2);
+    /**
+     * [toggleReadClass getting the class if read or unread]
+     * @param  {[type]} unread [description]
+     * @return {[type]}        [description]
+     */
+    $scope.toggleReadClass = function(unread) {
+    	return (unread == 1) ? 'unread' : 'read';
+    }
 
-			$timeout(function() {
-	          viewScroll.scrollBottom();
-	        }, 0);
-		});
-	}
+    /**
+     * toggling read/unread
+     * @param  {[type]} thread_key [description]
+     * @param  {[type]} unread     [description]
+     * @return {[type]}            [description]
+     */
+    $scope.toggleRead = function(thread_key, unread) {
+    	$http.post(ApiEndpoint.url + "/communication/unread", {
+            thread_key: thread_key,
+            unread: (unread == 1) ? 0 : 1,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+        	if (status == 200) {
+        		$scope.loadInbox();
+        	}
+        });
+    }
 
-	/**
-	 * converting attachment from json string to jsob object
-	 * @param  {[type]} attachments [description]
-	 * @return {[type]}             [description]
-	 */
-	$scope.attachments = function(attachments) {
+    $scope.toggleStarClass = function(starred) {
+    	return (starred == 1) ? 'ion-ios-heart' : 'ion-ios-heart-outline';
+    }
+
+    $scope.toggleStar = function(thread_key, starred) {
+    	$http.post(ApiEndpoint.url + "/communication/starred", {
+            thread_key: thread_key,
+            starred: (starred == 1) ? 0 : 1,
+            userid: $scope.user.id
+        }).success(function (data, status, header) {
+        	if (status == 200) {
+        		$scope.loadInbox();
+        	}
+        });
+    }
+
+    $scope.deleteThread = function(thread_key) {
+        $http.post(ApiEndpoint.url + "/communication/delete-thread", { thread_key: thread_key, userid: $scope.user.id }).success(function(data, status, header) {
+            $cordovaToast.show(data.message, 'short', 'bottom').then(function(success) {
+                // success
+
+            }, function(error) {
+                // error
+                $state.reload();
+            });
+            $scope.loadInbox();
+        });
+    }
+
+
+    // $scope.initScaleDrone = function() {
+    //     console.log("scaledrone service initialize");
+
+    //     $http.get(ApiEndpoint.url + '/notification/getData', { params: { userid: $scope.user.id } }).success(function(data, status) {
+    //         if (status == 200) {
+
+    //             var drone = new ScaleDrone(ScaleDronePush.channel_id);
+    //             console.log('scaledrone');
+    //             drone.on('open', function(error) {
+    //                 console.log('drone');
+    //                 if (error) {
+    //                     console.log(error);
+    //                 }
+
+    //                 var room = drone.subscribe(data.notification_room);
+
+    //                 room.on('open', function(error) {
+    //                     if (error) {
+    //                         console.log(error);
+    //                     }
+    //                 });
+
+    //                 room.on('data', function(data) {
+    //                     console.log(data);
+    //                     console.log($state.active);
+    //                 });
+    //             });
+
+    //         }
+    //     });
+    // }
+
+    $scope.loadConversation = function() {
+        var viewScroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
+
+        // conversation new array
+        $scope.conversations = new Array();
+
+        $scope.recipients = [];
+
+        // getting conversation data
+        $http.get(ApiEndpoint.url + '/communication/exchange/' + $stateParams.thread_key, { params: { userid: $scope.user.id } }).success(function(data, status, header) {
+            // passing it tru $scope
+            $scope.conversations = data.data.conversations;
+
+            $scope.recipients = data.data.recipients;
+
+            // setting title for the conversation
+            var title = "";
+
+            // looping all recipient for the formated title
+            angular.forEach($scope.getRecipients(data.data.recipients), function(d, k) {
+                title += d + ", ";
+            });
+
+            // conversation title from recipient
+            $scope.title = title.substring(0, title.length - 2);
+
+            $timeout(function() {
+                viewScroll.scrollBottom();
+            }, 0);
+        });
+    }
+
+    /**
+     * loads conversation messages
+     * @return {[type]} [description]
+     */
+    $scope.conversation = function() {
+
+        $scope.loadConversation();
+
+        ScaleDroneService.init(ScaleDronePush.channel_id, ApiEndpoint, $scope, $state, $scope.user.id);
+    }
+
+    /**
+     * converting attachment from json string to jsob object
+     * @param  {[type]} attachments [description]
+     * @return {[type]}             [description]
+     */
+    $scope.attachments = function(attachments) {
         return angular.fromJson(attachments);
     }
 
@@ -83,49 +285,103 @@ controllers.inboxCtrl = function($scope, $http, $stateParams, baseUrl, send, $ti
      * @param  {[array]} recipient [array of recipients]
      * @return {[string]}           [formated recipients]
      */
-	$scope.getRecipients = function(recipient) {
-		// if (typeof x != 'undefined' && x instanceof Array)
-		
-		var recipients = [];
-		angular.forEach(recipient, function(data, key) {
-			if (key == 'contacts') {
-				angular.forEach(data, function(d, k) {
-					recipients.push(d.name);
-				});
-			} else if (key == 'groups') {
-				angular.forEach(data, function(d, k) {
-					recipients.push(d.name);
-				});
-			}
-		});
+    $scope.getRecipients = function(recipient) {
+        // if (typeof x != 'undefined' && x instanceof Array)
 
-		return recipients;
-	}
+        var recipients = [];
+        angular.forEach(recipient, function(data, key) {
+            if (key == 'contacts') {
+                angular.forEach(data, function(d, k) {
+                    recipients.push(d.name);
+                });
+            } else if (key == 'groups') {
+                angular.forEach(data, function(d, k) {
+                    recipients.push(d.name);
+                });
+            }
+        });
 
-	/**
-	 * send function
-	 * @return {[type]} [description]
-	 */
-	$scope.send = function(event, message) {
+        return recipients;
+    }
+
+    /**
+     * send function
+     * @return {[type]} [description]
+     */
+    $scope.send = function(event, message, recipients) {
+        var contacts = [];
+
+        angular.forEach(recipients.contacts, function(contact, key) {
+            contacts.push(contact.id);
+        });
+
+        var groups = [];
+
+        angular.forEach(recipients.groups, function(group, key) {
+            groups.push(group.id);
+        });
+
+        var cellphones = [];
+
         $scope.message = {
             'enabled': false,
         };
-        send.sendNormal(baseUrl + "/communication/send/sms", {
+        send.sendMultiple(ApiEndpoint.url + "/communication/send/sms", {
             body: message,
             thread_key: $stateParams.thread_key,
             userid: $scope.user.id
-        }, $scope, false);
-
+        }, $scope, $state, cellphones, contacts, groups);
         event.preventDefault();
     };
 
+    $scope.file_name = "";
+    $scope.filesAttach = new Array();
 
-    /**
-     * this is to toggle star
-     * @return {[type]} [description]
+
+    $scope.clearAll = function() {
+        $scope.file_name = "";
+        $scope.filesAttach = new Array();      
+        $scope.message = true;  
+    }
+
+    /*
+     * upload file function
      */
-	$scope.toggleStar = function() {
-		console.log("not yet implemented");
-	}
+    $scope.uploadFiles = function(file, errFiles) {
+        $scope.f = file;
 
-}
+        $scope.file_name = file.name;
+
+        $scope.errFile = errFiles && errFiles[0];
+
+        if (file) {
+            file.upload = Upload.upload({
+                url: ApiEndpoint.url + '/attachment',
+                data: {
+                    file1: file,
+                    userid: $scope.user.id
+                }
+            });
+
+            file.upload.then(function (response) {
+
+                $timeout(function () {
+
+                    file.result = response.data;
+                    angular.forEach(response.data.attachment, function(data) {
+                        $scope.filesAttach.push(data);
+                    });
+
+                });
+
+            }, function (response) {
+
+                if (response.status > 0) {
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                }
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+        }   
+    }
+};

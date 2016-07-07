@@ -1,14 +1,18 @@
 /**
  * Created by joey on 6/15/2016.
  */
-controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPopup,$state,$stateParams){
+
+controllers.groupsCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ionicPopup, $state, $stateParams) {
+
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
-    $scope.init=function(){
+    $scope.init = function() {
 
         $scope.groups = new Array();
 
 
-        $http.get(baseUrl + '/group', {params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+
+        $http.get(ApiEndpoint.url + '/group', { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+
             console.log(data);
             if (status == 200) {
                 $scope.groups = data;
@@ -20,21 +24,23 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
     }
 
     $scope.group = {
-        name:'',
-        text_join_enable:1,
-        text_join_enabled:true,
-        join_message:'',
-        keywords:'',
-        userid:  $scope.user.id,
+        name: '',
+        text_join_enable: 1,
+        text_join_enabled: true,
+        join_message: '',
+        keywords: '',
+        userid: $scope.user.id,
     };
-  
-    $scope.addGroup=function(){
-        if( $scope.group.text_join_enabled){
-            $scope.group.text_join_enable=1;
-        }else{
-            $scope.group.text_join_enable=0;
+
+    $scope.addGroup = function() {
+        if ($scope.group.text_join_enabled) {
+            $scope.group.text_join_enable = 1;
+        } else {
+            $scope.group.text_join_enable = 0;
         }
-        $http.post(baseUrl + '/group', $scope.group).success(function (data, status, headers, config) {
+
+        $http.post(ApiEndpoint.url + '/group', $scope.group).success(function(data, status, headers, config) {
+
             console.log(data);
             if (status == 200) {
                 var alertPopup = $ionicPopup.alert({
@@ -49,7 +55,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
                     template: data.message
                 });
             }
-        }).error(function (data, status, header, config) {
+        }).error(function(data, status, header, config) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Add new group failed',
                 template: data.message
@@ -58,35 +64,39 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         });
     }
 
-    $scope.editInit= function(){
-        $http.get(baseUrl +'/group/' + $stateParams.id,{params:{userid:$scope.user.id}}).success(function (data, status, headers) {
+
+    $scope.editInit = function() {
+        $http.get(ApiEndpoint.url + '/group/' + $stateParams.id, { params: { userid: $scope.user.id } }).success(function(data, status, headers) {
+
             if (status == 200) {
                 if (data.length == 0) {
                     $state.go('tabsController.contacts');
                 }
                 console.log(data);
                 $scope.group = data;
-                if($scope.group.text_join_enable==1){
-                    $scope.group.text_join_enabled=true;
-                }else{
-                    $scope.group.text_join_enabled=false;
+                if ($scope.group.text_join_enable == 1) {
+                    $scope.group.text_join_enabled = true;
+                } else {
+                    $scope.group.text_join_enabled = false;
                 }
-                $scope.group.userid= $scope.user.id;
+                $scope.group.userid = $scope.user.id;
             } else {
 
             }
         });
     }
 
-    $scope.deleteGroup= function(){
+    $scope.deleteGroup = function() {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Delete Group',
             template: 'Are you sure you want to delete this group?'
         });
 
         confirmPopup.then(function(res) {
-            if(res) {
-                $http.delete(baseUrl + '/group/' +   $scope.group.id,{params:{userid:$scope.user.id}}).success(function (data, status, header) {
+
+            if (res) {
+                $http.delete(ApiEndpoint.url + '/group/' + $scope.group.id, { params: { userid: $scope.user.id } }).success(function(data, status, header) {
+
                     if (status == 200) {
                         $state.go('tabsController.groups');
                     }
@@ -97,7 +107,7 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         });
 
     }
-    $scope.detachContactById = function($id){
+    $scope.detachContactById = function($id) {
         $scope.contact = $scope.group.contacts[$id];
         var confirmPopup = $ionicPopup.confirm({
             title: 'Detach Contact',
@@ -105,10 +115,10 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
         });
 
         confirmPopup.then(function(res) {
-            if(res) {
-                $http.post(baseUrl + "/group/detach",
-                    {group_id: $scope.group.id, contact_id: $scope.contact.id,userid:$scope.user.id}
-                ).success(function (data, status, header) {
+
+            if (res) {
+                $http.post(ApiEndpoint.url + "/group/detach", { group_id: $scope.group.id, contact_id: $scope.contact.id, userid: $scope.user.id }).success(function(data, status, header) {
+
                     $scope.group.contacts.splice($id, 1);
                 });
             } else {
@@ -116,27 +126,28 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
             }
         });
     }
-    $scope.cancel = function(){
+    $scope.cancel = function() {
         $state.go('tabsController.groups');
     }
-    $scope.addContactGroup= function(){
-        $state.go('addGroupContact',{id:$scope.group.id});
+    $scope.addContactGroup = function() {
+        $state.go('addGroupContact', { id: $scope.group.id });
     }
-    $scope.editGroup=function(){
-        $state.go('editGroup',{id:$scope.group.id});
+    $scope.editGroup = function() {
+        $state.go('editGroup', { id: $scope.group.id });
     }
 
-    $scope.updateGroup = function () {
+    $scope.updateGroup = function() {
 
         $http.put(
-            baseUrl + "/group/" + $stateParams.id, $scope.group
-        ).success(function (data, status, header) {
+            ApiEndpoint.url + "/group/" + $stateParams.id, $scope.group
+
+        ).success(function(data, status, header) {
             if (status == 200) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Update new group successful',
                     template: data.message
                 });
-                $state.go('viewGroups',{id:$scope.group.id});
+                $state.go('viewGroups', { id: $scope.group.id });
 
             } else if (status == 202) {
                 var alertPopup = $ionicPopup.alert({
@@ -145,9 +156,8 @@ controllers.groupsCtrl = function($scope,$http, baseUrl, $timeout, $q, $ionicPop
                 });
 
             }
-        }).error(function (data, status, header, config) {
+        }).error(function(data, status, header, config) {
 
         });
     }
 }
-

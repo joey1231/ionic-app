@@ -6,6 +6,7 @@ platforms/
 plugins/
 bin/
 .vs/
+.idea/
 smsvoip-ionic-app.jsproj
 smsvoip-ionic-app.sln
 smsvoip-ionic-app.jsproj.user

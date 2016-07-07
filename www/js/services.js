@@ -1,29 +1,55 @@
 angular.module('app.services', [])
 
-    .factory('BlankFactory', [function () {
+.factory('BlankFactory', [function() {
 
     }])
-    .factory('baseUrl', function () {
-        return document.getElementsByName('baseUrl')[0].getAttribute('content');
+    .factory('ApiEndpoint', function() {
+        return document.getElementsByName('ApiEndpoint')[0].getAttribute('content');
     })
-    .service('LoginService', function($q,baseUrl,$http) {
+    .factory('CameraService', function($q) {
+
+        return {
+            getPicture: function(options) {
+                var q = $q.defer();
+
+                navigator.camera.getPicture(function(result) {
+                    q.resolve(result);
+                }, function(err) {
+                    q.reject(err);
+                }, options);
+
+                return q.promise;
+            }
+        }
+
+    })
+    .service('LoginService', function($q, ApiEndpoint, $http, $ionicUser) {
+
         return {
             loginUser: function(email, password) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
+                // get the ionic user to get the device token
+                var user_device = $ionicUser.get();
+
                 $http.post(
-                    baseUrl + "/login", {'username': email,'password':password}
-                ).success(function (data, status, header) {
+
+                    ApiEndpoint.url + "/login", { 'username': email, 'password': password, device: user_device.user_id }
+                ).success(function(data, status, header) {
+
                     if (status == 202) {
+
                         deferred.reject(data.message);
                     } else if (status == 200) {
                         deferred.resolve('Welcome ' + data.data.name + '!');
-                        window.localStorage.setItem('user',JSON.stringify(data.data));
+                        window.localStorage.setItem('user', JSON.stringify(data.data));
                     }
 
-                }).error(function (data, status, header, config) {
-                    deferred.reject('Wrong credentials.');
+                }).error(function(data, status, header, config) {
+                    console.log(data);
+                    deferred.reject(ApiEndpoint.url);
+
 
                 });
                 promise.success = function(fn) {
@@ -38,162 +64,133 @@ angular.module('app.services', [])
             }
         }
     })
-    .service('BlankService', [function () {
+    .service('BlankService', [function() {
 
     }])
-    .service('send', ['$http', function ($http) {
-    this.sendSingle = function(url, message, $scope, $state) {
-        
+    .service('Attachments', function($http, ApiEndpoint, $ionicPopup) {
+        this.attach = function($scope, $fileUrl) {
+            var ext = this.getExtension($fileUrl);
+            var extensions = { 'mpeg': 'video/mpeg', 'mp4': 'video/mp4', 'quicktime': 'video/quicktime', 'webm': 'video/webm', '3gpp': 'video/3gpp', '3gpp2': 'video/3gpp2', '3gpp-tt': 'video/3gpp-tt', 'H261': 'video/H261', 'H263': 'video/H263', 'H263-1998': 'video/H263-1998', 'H263-2000': 'video/H263-2000', 'H264': 'video/H264', 'jpeg': 'image/jpeg', 'jpg': 'image/jpeg', 'gif': 'image/gif', 'png': 'image/png', 'bmp': 'image/bmp', 'vcard': 'text/vcard', 'csv': 'text/csv', 'rtf': 'text/rtf', 'richtext': 'text/richtext', 'calendar': 'text/calendar', 'pdf': 'application/pdf', 'basic': 'audio/basic', 'L24': 'audio/L24', 'mp4': 'audio/mp4', 'mpeg': 'audio/mpeg', 'ogg': 'audio/ogg', 'vorbis': 'audio/vorbis', 'vnd.rn-realaudio': 'audio/vnd.rn-realaudio', 'vnd.wave': 'audio/vnd.wave', '3gpp': 'audio/3gpp', '3gpp2': 'audio/3gpp2', 'ac3': 'audio/ac3', 'vnd.wave': 'audio/vnd.wave', 'webm': 'audio/webm', 'amr-nb': 'audio/amr-nb', 'amr': 'audio/amr' };
+            var type = extensions[ext];
+            var options = new FileUploadOptions();
+            options.fileKey = "file1";
+            options.fileName = $fileUrl.substr($fileUrl.lastIndexOf('/') + 1);
+            options.mimeType = type;
 
-        $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number]}).success(function(data, status, header) {
-            if (status == 200) {
-                $scope.sendStatus = "sent";
-                $state.go('tabsController.inbox');
-            }
-        });
-    }
-    this.sendNormal = function (url, data, $scope, flag) {
-        // check if the body of message not empty or attachment
-        if (($scope.body != '' && typeof $scope.body != 'undefined') || $scope.attachments.length > 0) {
-            $scope.message.enabled = false;
-            $scope.error = false;
+            var params = {};
+            params.userid = $scope.user.id;
+
+            options.params = params;
+            alert(type);
+
             try {
-                // Post the request
-                $http.post(
-                    url, data
-                ).success(function (data, status, header) {
-                    if (status == 202) {
-
-                    }
-                    if (status == 200) {
-
-                        $scope.message = {
-                            'enabled': true,
-                        }
-                        $scope.attachments = new Array();
-                        $scope.body = '';
-                        $scope.scheduled_at = null;
-
-                        $scope.message.enabled = true;
-                        $scope.converstaion();
-                    }
-
-                    
-
-                }).error(function (data, status, header, config) {
-                    var error = '';
-                    if (status == 202 || status == 401) {
-
-                        $scope.error = true;
-                    }
-                    $scope.attachments = new Array();
-                    $scope.body = '';
-                    $scope.scheduled_at = null;
-                    angular.element(document.querySelector('#sendbtn')).html('Send');
-                    $scope.message.enabled = true;
+                var ft = new FileTransfer();
+                ft.upload($fileUrl, ApiEndpoint.url + '/attachment', function(data, status) {
+                    alert(JSON.stringify(data));
+                    $scope.filesAttach.push(data);
+                    // return data;
+                }, function(error) {
+                    alert(JSON.stringify(error))
+                    return error;
+                }, options);
+            } catch (ex) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Error updating profile',
+                    template: ex.message
                 });
-            } catch (e) {
-               
             }
-
-        } else {
-            $scope.message.enabled = true;
         }
-        //  return response;
-    }
-    this.sendList = function (url, data, $scope, flag, $location) {
-        // check if the body of message not empty or attachment
-        if (($scope.body != '' && typeof $scope.body != 'undefined' ) || $scope.attachments.length > 0) {
-            $scope.senddisabled = true;
-            $scope.success = false;
-            $scope.error = false;
-            angular.element(document.querySelector('#send')).html('Sending..');
-            angular.element(document.querySelector('.success-send' + (flag == false ? 's' : ''))).html('');
-            angular.element(document.querySelector('.error-send' + (flag == false ? 's' : ''))).html('');
-            if ($scope.selectedList.length <= 0) {
-                angular.element(document.querySelector('.error-send' + (flag == false ? 's' : ''))).html(' <span>Please select or input contact</span>');
-                $scope.senddisabled = false;
-                $scope.error = true;
+        this.getExtension = function(path) {
+            var basename = path.split(/[\\/]/).pop(), // extract file name from full path ...
+                // (supports `\\` and `/` separators)
+                pos = basename.lastIndexOf("."); // get last position of `.`
 
+            if (basename === "" || pos < 1) // if file name is empty or ...
+                return ""; //  `.` not found (-1) or comes first (0)
+
+            return basename.slice(pos + 1); // extract extension ignoring `.`
+        }
+    })
+    .service('send', ['$http', function($http) {
+        this.sendSingle = function(url, message, $scope, $state) {
+            var attachment = new Array();
+            if (typeof $scope.filesAttach !== 'undefined' || $scope.filesAttach !== null) {
+                attachment = $scope.filesAttach;
             }
-            else {
-                try {
+            console.log(attachment);
+            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: [], groups: [], cellphones: [message.number], attachments: attachment }).success(function(data, status, header) {
+                if (status == 200) {
+                    $scope.sendStatus = "sent";
+                    $state.go('tabsController.inbox');
+                }
+            });
+        }
+        this.sendMultiple = function(url, message, $scope, $state, cellphones, contacts, groups) {
+            var attachment = new Array();
+            if (typeof $scope.filesAttach !== 'undefined' || $scope.filesAttach !== null) {
+                attachment = $scope.filesAttach;
+            }
+            console.log(attachment);
+            $http.post(url, { userid: $scope.user.id, body: message.body, contacts: contacts, groups: groups, cellphones: cellphones, attachments: attachment }).success(function(data, status, header) {
+                if (status == 200) {
+                    $scope.sendStatus = "sent";
+                    console.log(data);
+                    $scope.loadConversation();
+                    $scope.message = {
+                        'enabled': true,
+                    };
 
-                    var error = '';
-                    var body = $scope.body;
-                    var count = 0;
-                    var attachments = $scope.attachments;
-                    var cellphones = new Array();
-                    var groups = new Array();
-                    var contacts = new Array();
-                    angular.forEach($scope.selectedList, function (item) {
-                        switch (item.type) {
-                            case 'contact':
-                                contacts.push(item.id);
-                                break;
-                            case 'group':
-                                groups.push(item.id);
-                                break;
-                            case 'number':
-                                cellphones.push(item.number);
-                                break;
+                    $scope.input.message = "";
+
+                    $scope.clearAll();
+                }
+            });
+        }
+    }])
+    .service('ScaleDroneService', ['$http', '$cordovaLocalNotification', function($http, $cordovaLocalNotification) {
+        this.init = function(channel, ApiEndpoint, $scope, $state, user_id) {
+            $http.get(ApiEndpoint.url + '/notification/getData', { params: { userid: user_id } }).success(function(data, status) {
+                if (status == 200) {
+
+                    var drone = new ScaleDrone(channel);
+
+                    drone.on('open', function(error) {
+                        console.log('Drone Ready');
+                        if (error) {
+                            console.log(error);
                         }
+
+                        var room = drone.subscribe(data.notification_room);
+
+                        room.on('open', function(error) {
+                            if (error) {
+                                console.log(error);
+                            }
+                        });
+
+                        room.on('data', function(data) {
+                            if (data.event == "new_message") {
+                                console.log(data);
+                                $cordovaLocalNotification.schedule({
+                                    id: "12345",
+                                    message: data.payload.Body,
+                                    title: "new message from " + data.payload.From,
+                                    autoCancel: true
+                                }).then(function() {
+                                    console.log("new message notification");
+                                });
+                                if ($state.current.name == "tabsController.inbox") {
+                                    $scope.loadInbox();
+                                }
+
+                                if ($state.current.name == "tabsController.conversation") {
+                                    $scope.loadConversation();
+                                }
+                            }
+                        });
                     });
-
-                    // Post the request
-                    $http.post(
-                        url, {
-                            body: body,
-                            contacts: contacts,
-                            groups: groups,
-                            cellphones: cellphones,
-                            attachments: attachments
-                        }
-                    ).success(function (data, status, header) {
-
-                        if (status == 202 || status == 401) {
-                            error += data.message + " " + item.name + "<br/>"
-                            angular.element(document.querySelector('.error-send' + (flag == false ? 's' : ''))).append(data.message + " " + "<br/>");
-                            $scope.error = true;
-                        }
-                        if (status == 200) {
-
-                            $scope.body = '';
-                            angular.element(document.querySelector('#send')).html('Send');
-                            $scope.attachments = new Array();
-                            $scope.optionsList = [];
-                            $scope.selectedList = [];
-                            angular.element(document.querySelector('body')).attr('class', 'page-body ng-scope');
-                            $location.path('/conversation/' + data.data.thread_key);
-
-
-                        }
-                        count++;
-                        if (count == $scope.selectedList.length) {
-                            $scope.$broadcast("update", {});
-                            $scope.senddisabled = false;
-                            angular.element(document.querySelector('#send')).html('Send');
-                        }
-                    }).error(function (data, status, header, config) {
-                        if (status == 202 || status == 401) {
-                            error += data.message + " " + "<br/>"
-                            angular.element(document.querySelector('.error-send' + (flag == false ? 's' : ''))).append(data.message + "<br/>");
-                            $scope.error = true;
-                        }
-                        count++;
-                        if (count == $scope.selectedList.length) {
-                            $scope.$broadcast("update", {});
-                            $scope.senddisabled = false;
-                            angular.element(document.querySelector('#send')).html('Send');
-                        }
-                    });
-                } catch (ex) {
 
                 }
-
-
-            }
+            });
         }
-    }
-}]);
-
+    }]);

@@ -1,13 +1,32 @@
 <ion-view title="Messages" id="page11" class=" ">
     <ion-content padding="true" class="has-header">
-        <form id="messages-form6" class="list ">
+        <form id="newMessageForm" class="list " ng-init="initContacts()">
             <label class="item item-input " id="messages-input10">
-                <span class="input-label">Number:</span>
-                <input type="tel" placeholder="" ng-model="message.number">
+                <input type="tel" placeholder="Number: " ng-model="message.number"
+                >
             </label>
             <label class="item item-input " id="messages-textarea8">
-                <span class="input-label">Message</span><textarea placeholder="" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
+                <textarea placeholder="Type Message" height="600" ng-disabled="sendStatus=='sending'" ng-model="message.body"></textarea>
             </label>
+        </form>
+        <form id="newContact-form7" class="list ">
+            <ion-item class="item-divider " id="newContact-list-item-divider6">Attachments</ion-item>
+            <ion-list id="contacts-list2" class=" "  >
+
+                <ion-item class="item-avatar item item-icon-right " ng-repeat="file in filesAttach"   id="contacts-list-item9">
+
+                    {{file.name}}
+                   <i class="icon ion-close assertive" ng-click="removeAttach($index)"></i>
+
+                </ion-item>
+
+                    
+
+            </ion-list>
+            <div id="newContact-button-bar4" class=" button-bar ">
+
+                <button id="newContact-button15" class=" button button-balanced  button-block " ng-click="fileChooseDialog()">Select File</button>
+            </div>
         </form>
         <button id="messages-button6" class=" button button-positive  button-block icon-right ion-android-send " ng-disabled="sendStatus=='sending'" ng-click="send(message)">Send</button>
     </ion-content>

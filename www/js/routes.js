@@ -121,7 +121,11 @@ angular.module('app.routes', [])
                 }
             })
 
-
+             .state('sendMessage', {
+                url: '/sendMessage/:id',
+                templateUrl: 'templates/send-message.html',
+                controller: 'messagesCtrl'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'templates/login.html',

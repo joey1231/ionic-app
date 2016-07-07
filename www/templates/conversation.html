@@ -1,52 +1,45 @@
-<ion-view id="userMessagesView" cache-view="false" view-title="{{ title }}" ng-init="converstaion()">
-    
+<ion-view id="userMessagesView" cache-view="true" view-title="{{ title }}" ng-init="conversation()">
     <div class="loader-center" ng-if="!doneLoading">
         <div class="loader">
-          <i class="icon ion-loading-c"></i>
+            <i class="icon ion-loading-c"></i>
         </div>
     </div>
-
-    <ion-content has-bouncing="true" class="has-header has-footer" 
-              delegate-handle="userMessageScroll">
+    <ion-content has-bouncing="true" class="has-header has-footer" delegate-handle="userMessageScroll">
         <div class="message-wrapper" ng-repeat="messages in conversations">
-
-
-            <div > 
+            <div>
                 <div class="chat-bubble {{ (messages.direction == 2) ? 'right': 'left'}}">
-
                     <div class="message" autolinker>
-                      {{messages.body}}
-                      <ul>
-                        <li ng-repeat="attachment in attachments(messages.attachments)">
-                          <a href="{{ attachment.file }}" target="_blank"><img src="{{ attachment.file }}" class="attachment-img"></a>
-                        </li>
-                      </ul>
+                        {{messages.body}}
+                        <ul>
+                            <li ng-repeat="attachment in attachments(messages.attachments)">
+                                <a href="{{ attachment.file }}" target="_blank"><img src="{{ attachment.file }}" class="attachment-img"></a>
+                            </li>
+                        </ul>
                     </div>
-
                     <div class="message-detail">
-                        <!-- <span ng-click="viewProfile(message)" 
+                        <!-- <span ng-click="viewProfile(message)"
                             class="bold">detail</span> -->
                         <span am-time-ago="messages.created_at | amUtc"></span>
                     </div>
-
                 </div>
             </div>
-
-
             <div class="cf"></div>
         </div>
     </ion-content>
-
     <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
-              <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
-                  <label class="item-input-wrapper">
-                      <textarea ng-model="input.message" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic ng-disabled="message.enabled==false"></textarea>
-                  </label>
-                  <div class="footer-btn-wrap">
-                    <button class="button button-icon icon ion-android-send footer-btn"
-                        ng-disabled="!input.message || input.message === ''" ng-disabled="message.enabled==false" ng-click="send($event, input.message)">
-                    </button>
-                  </div>
-              </ion-footer-bar>
-          </form>
+        <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+            <input type="file" id="uploadFileButton" ngf-select="uploadFiles($file, $invalidFiles)" ngf-max-heigh="1000" ngf-max-size="1MB" style="display: none" />
+            <button class="button button-icon icon ion-ios-plus-outline" onclick="document.getElementById('uploadFileButton').click();"></button>
+            <div>
+                <p>{{file_name}}</p>
+            </div>
+            <label class="item-input-wrapper">
+                <textarea ng-model="input.message" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic ng-disabled="message.enabled==false"></textarea>
+            </label>
+            <div class="footer-btn-wrap">
+                <button class="button button-icon icon ion-android-send footer-btn" ng-disabled="!input.message || input.message === ''" ng-disabled="message.enabled==false" ng-click="send($event, input.message, recipients)">
+                </button>
+            </div>
+        </ion-footer-bar>
+    </form>
 </ion-view>
