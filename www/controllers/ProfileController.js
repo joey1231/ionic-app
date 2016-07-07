@@ -1,16 +1,16 @@
 controllers.profileCtrl = function(
-    $scope, 
-    $http, 
-    $timeout, 
-    $q, 
-    $ionicPopup, 
-    $state, 
-    $stateParams, 
-    ApiEndpoint, 
-    $cordovaImagePicker, 
-    $ionicPlatform, 
-    $cordovaFileTransfer, 
-    $cordovaCamera, 
+    $scope,
+    $http,
+    $timeout,
+    $q,
+    $ionicPopup,
+    $state,
+    $stateParams,
+    ApiEndpoint,
+    $cordovaImagePicker,
+    $ionicPlatform,
+    $cordovaFileTransfer,
+    $cordovaCamera,
     CameraService,
     $ionicLoading) {
 
@@ -240,8 +240,8 @@ controllers.profileCtrl = function(
             });
         }
     }
-    $scope.changePlan = function(stripe_id){
-           var confirmPopup = $ionicPopup.confirm({
+    $scope.changePlan = function(stripe_id) {
+        var confirmPopup = $ionicPopup.confirm({
             title: 'Change Plan',
             template: 'Are you sure you want to change with this plan?'
         });
@@ -249,14 +249,14 @@ controllers.profileCtrl = function(
 
             if (res) {
                 $ionicLoading.show({
-               content: 'Loading',
-               animation: 'fade-in',
-               showBackdrop: true,
-               maxWidth: 200,
-               showDelay: 0
-           });
-                      $http.post(
-                      ApiEndpoint.url + "/plan/change-plan", {plan_id: stripe_id, userid: $scope.user.id}
+                    content: 'Loading',
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
+                $http.post(
+                    ApiEndpoint.url + "/plan/change-plan", { plan_id: stripe_id, userid: $scope.user.id }
                 ).success(function(data, status, header) {
                     $ionicLoading.hide();
                     if (status == 200) {
@@ -264,7 +264,7 @@ controllers.profileCtrl = function(
                             title: 'Change plan success!',
                             template: data.message
                         });
-                            $scope.init();
+                        $scope.init();
                     } else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Change plan failed!',
