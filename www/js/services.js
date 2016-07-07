@@ -64,6 +64,11 @@ angular.module('app.services', [])
             }
         }
     })
+    .service('RegisterService', function($http, ApiEndpoint, $q) {
+        return {
+          
+        }
+    })
     .service('BlankService', [function() {
 
     }])

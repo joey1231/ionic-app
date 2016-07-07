@@ -1,3 +1,3 @@
-controllers.signupCtrl = function($scope) {
+controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $cordovaDialogs, $state) {
 
 }
