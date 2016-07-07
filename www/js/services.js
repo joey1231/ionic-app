@@ -64,9 +64,17 @@ angular.module('app.services', [])
             }
         }
     })
-    .service('RegisterService', function($http, ApiEndpoint, $q) {
+    .service('RegisterService', function($http, ApiEndpoint) {
         return {
-          
+          // user registration function and accept needed functions by the API
+            registration: function(company_name, name, email, password){
+              return $http.post(ApiEndpoint.url + "/register", JSON.stringify({
+                company_name: company_name,
+                name: name,
+                email: email,
+                password: password
+              }))
+          }
         }
     })
     .service('BlankService', [function() {
