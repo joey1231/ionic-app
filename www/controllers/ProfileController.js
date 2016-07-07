@@ -15,7 +15,6 @@ controllers.profileCtrl = function(
     $ionicLoading) {
 
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
-    console.log($scope.user);
 
     $scope.company = {
         company_name: ''
