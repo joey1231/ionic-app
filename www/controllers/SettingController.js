@@ -8,7 +8,7 @@ controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
             ApiEndpoint.url + "/dashboard/profile", { params: { userid: $scope.user.id } }
         ).success(function(data) {
             console.log(data);
-            $scope.profile = data;
+            $scope.profile = data.data;
             $scope.proccessToggle();
         }).error(function(data, status, header, config) {
             console.log(data);
@@ -29,13 +29,13 @@ controllers.settingCtrl = function($scope, $http, $timeout, $q, $ionicPopup, $st
 
     $scope.proccessToggle=function(){
         $scope.toggle_setting = {
-            'phone_webrtc_enabled':$scope.profile.phone_webrtc_enabled == 1 ? true : false,
-            'forward_incoming_message':$scope.profile.forward_incoming_message == 1 ? true : false,
-            'sound_notification':$scope.profile.sound_notification == 1 ? true:false,
-            'desktop_notification':$scope.profile.desktop_notification == 1 ? true:false,
-            'hide_link_bulk_message':$scope.profile.hide_link_bulk_message == 1 ? true:false,
-            'disable_incoming_message':$scope.profile.disable_incoming_message == 1 ? true:false,
-            'transcribe_voicemail':$scope.profile.transcribe_voicemail == 1 ? true:false,
+            'phone_webrtc_enabled':$scope.profile.phone_webrtc_enabled == '1' ? true : false,
+            'forward_incoming_message':$scope.profile.forward_incoming_message == '1' ? true : false,
+            'sound_notification':$scope.profile.sound_notification == '1' ? true:false,
+            'desktop_notification':$scope.profile.desktop_notification == '1' ? true:false,
+            'hide_link_bulk_message':$scope.profile.hide_link_bulk_message == '1' ? true:false,
+            'disable_incoming_message':$scope.profile.disable_incoming_message == '1' ? true:false,
+            'transcribe_voicemail':$scope.profile.transcribe_voicemail == '1' ? true:false,
          }
       console.log($scope.toggle_setting);
     }
