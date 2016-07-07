@@ -11,7 +11,9 @@ controllers.profileCtrl = function(
     $ionicPlatform, 
     $cordovaFileTransfer, 
     $cordovaCamera, 
-    CameraService) {
+    CameraService,
+    $ionicLoading) {
+
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
     console.log($scope.user);
 
@@ -237,5 +239,47 @@ controllers.profileCtrl = function(
                 template: ex.message
             });
         }
+    }
+    $scope.changePlan = function(stripe_id){
+           var confirmPopup = $ionicPopup.confirm({
+            title: 'Change Plan',
+            template: 'Are you sure you want to change with this plan?'
+        });
+        confirmPopup.then(function(res) {
+
+            if (res) {
+                $ionicLoading.show({
+               content: 'Loading',
+               animation: 'fade-in',
+               showBackdrop: true,
+               maxWidth: 200,
+               showDelay: 0
+           });
+                      $http.post(
+                      ApiEndpoint.url + "/plan/change-plan", {plan_id: stripe_id, userid: $scope.user.id}
+                ).success(function(data, status, header) {
+                    $ionicLoading.hide();
+                    if (status == 200) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Change plan success!',
+                            template: data.message
+                        });
+                            $scope.init();
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Change plan failed!',
+                            template: data.message
+                        });
+                    }
+
+
+
+                }).error(function(data, status, header, config) {
+
+                });
+            } else {
+
+            }
+        });
     }
 }
