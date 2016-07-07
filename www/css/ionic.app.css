@@ -9927,6 +9927,13 @@ img.attachment-img {
 #newMessageForm textarea {
   height: 400px !important; }
 
+p {
+  width: 100%; }
+  p span.to-right {
+    float: right;
+    padding-right: 20px;
+    clear: bottom; }
+
 .user-profile {
   margin-right: 20px !important;
   -webkit-box-shadow: 0 0 0 4px rgba(221, 221, 221, 0.3) !important;
