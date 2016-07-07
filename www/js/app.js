@@ -7,20 +7,21 @@
 // 'starter.controllers' is found in controllers.js
 
 var app = angular.module('app', [
-    'ionic', 
-    'ionic.service.core', 
-    'ion-autocomplete', 
-    'ngCordova', 
-    'ionic.service.push', 
-    'app.routes', 
-    'app.services', 
-    'app.directives', 
+    'ionic',
+    'ionic.service.core',
+    'ion-autocomplete',
+    'ngCordova',
+    'ionic.service.push',
+    'app.routes',
+    'app.services',
+    'app.directives',
     'angularMoment',
     'ngFileUpload'])
     .constant('ApiEndpoint', {
         // url: 'http://localhost:8100/ionic',
         url: 'http://159.203.201.53/ionic',
-        baseUrl:'http://159.203.201.53'
+        baseUrl:'http://159.203.201.53',
+      registration: 'http://localhost:8100/register'
     })
     .constant('ScaleDronePush', {
         channel_id: 'Not4yRVrFtQgNuDL'

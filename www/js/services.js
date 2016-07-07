@@ -67,12 +67,13 @@ angular.module('app.services', [])
     .service('RegisterService', function($http, ApiEndpoint) {
         return {
           // user registration function and accept needed functions by the API
-            registration: function(company_name, name, email, password){
-              return $http.post(ApiEndpoint.url + "/register", JSON.stringify({
-                company_name: company_name,
+            registration: function(company, name, email, password){
+              return $http.post(ApiEndpoint.registration + "/register", JSON.stringify({
+                company_name: company,
                 name: name,
                 email: email,
-                password: password
+                password: password,
+                is_mobile: true
               }))
           }
         }

@@ -27,9 +27,10 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
     }
 
     $scope.signup = function() {
-        var alertPopup = $ionicPopup.alert({
+        /*var alertPopup = $ionicPopup.alert({
             title: 'Signup',
             template: "Please Signup on SMSVOIP website <br/> https://staging.smsvoip.nscook.net/register"
-        });
+        });*/
+      $state.go('signup')
     }
 }

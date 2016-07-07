@@ -5,7 +5,10 @@
     {
       "path": "/ionic",
       "proxyUrl": "http://159.203.201.53/ionic"
-
+    },
+    {
+      "path": "/register",
+      "proxyUrl": "http://159.203.201.53/register"
     }
   ],
   "gulpStartupTasks": [
