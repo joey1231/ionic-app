@@ -12,15 +12,21 @@ controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state
       $scope.registration.email,
       $scope.registration.password
     )
-      .success(function(){
-        $state.go('login')
+      .success(function(data, status){
+        if(status == 202) {
+          /*$ionicPopup.alert({
+            title:'Registration Failed',
+            template: data.message
+          });*/
+          console.log(data.errors);
+          //$cordovaToast.show('Registration failed: ' + error.message, 'short','center')
+        } else if (status == 200) {
+          //$state.go('changeplan');
+          console.log('no error');
+        }
       })
-      .error(function(error){
-        //$cordovaToast.show('Registration failed: ' + error.message, 'short','center')
-        $ionicPopup.alert({
-          title:'Registration Failed',
-          template: error.message
-        });
+      .error(function(data, status){
+        console.log(data.message);
       })
 
   }
