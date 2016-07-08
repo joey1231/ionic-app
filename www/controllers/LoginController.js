@@ -10,7 +10,7 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
         'save': false
     };
     $scope.login = function() {
-        LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data) {
+        LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data, status, header) {
             $state.go('tabsController.inbox');
         }).error(function(data) {
 
