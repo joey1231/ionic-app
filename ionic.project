@@ -6,7 +6,7 @@
       "path": "/ionic",
       "proxyUrl": "http://159.203.201.53/ionic"
 
-    }
+    },
   ],
   "gulpStartupTasks": [
     "sass",
