@@ -11,6 +11,11 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
     };
     $scope.login = function() {
         LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data, status, header) {
+            if (status == 202) {
+                if (data.not_subscribe == true) {
+                    // here
+                }
+            }
             $state.go('tabsController.inbox');
         }).error(function(data) {
 
