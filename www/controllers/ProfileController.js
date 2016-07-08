@@ -1,25 +1,36 @@
 controllers.profileCtrl = function(
-    $scope, 
-    $http, 
-    $timeout, 
-    $q, 
-    $ionicPopup, 
-    $state, 
-    $stateParams, 
-    ApiEndpoint, 
-    $cordovaImagePicker, 
-    $ionicPlatform, 
-    $cordovaFileTransfer, 
-    $cordovaCamera, 
+    $scope,
+    $http,
+    $timeout,
+    $q,
+    $ionicPopup,
+    $state,
+    $stateParams,
+    ApiEndpoint,
+    $cordovaImagePicker,
+    $ionicPlatform,
+    $cordovaFileTransfer,
+    $cordovaCamera,
     CameraService,
     $ionicLoading) {
 
     $scope.user = JSON.parse(window.localStorage.getItem('user'));
-    console.log($scope.user);
 
     $scope.company = {
         company_name: ''
     };
+
+    /**
+     * customers usage
+     * 
+     * total send messages
+     * total minutes
+     */
+    $scope.usages = {
+        messages: 0,
+        minutes: 0
+    }
+
     $scope.profile = new Array();
     $scope.profile.forwarding_devices = new Array();
     $scope.plans = {};
@@ -49,6 +60,30 @@ controllers.profileCtrl = function(
         });
     }
     $scope.password = { old: '', new: '', confirm: '', userid: $scope.user.id, };
+
+    $scope.initUsages = function() {
+
+        // calling singleUsage API
+        $http.get(ApiEndpoint.url + '/singleUsage', {
+            params: {
+                userid: $scope.user.id
+            }
+        }).success(function(response, status, headers) {
+            if (status == 200) {
+                if (response.data.messages_spent_month != 0) {
+                    $scope.usages.messages = response.data.messages_spent_month + " totals messages sent"
+                } else {
+                    $scope.usages.messages = "n/a"
+                }
+
+                if (response.data.minutes_spent_month != 0) {
+                    $scope.usages.minutes = response.data.minutes_spent_month + " total minutes"
+                } else {
+                    $scope.usages.minutes = "n/a"
+                }
+            }
+        });
+    }
 
     //Post toUpdate password
     $scope.updatepassword = function() {
@@ -240,8 +275,8 @@ controllers.profileCtrl = function(
             });
         }
     }
-    $scope.changePlan = function(stripe_id){
-           var confirmPopup = $ionicPopup.confirm({
+    $scope.changePlan = function(stripe_id) {
+        var confirmPopup = $ionicPopup.confirm({
             title: 'Change Plan',
             template: 'Are you sure you want to change with this plan?'
         });
@@ -249,14 +284,14 @@ controllers.profileCtrl = function(
 
             if (res) {
                 $ionicLoading.show({
-               content: 'Loading',
-               animation: 'fade-in',
-               showBackdrop: true,
-               maxWidth: 200,
-               showDelay: 0
-           });
-                      $http.post(
-                      ApiEndpoint.url + "/plan/change-plan", {plan_id: stripe_id, userid: $scope.user.id}
+                    content: 'Loading',
+                    animation: 'fade-in',
+                    showBackdrop: true,
+                    maxWidth: 200,
+                    showDelay: 0
+                });
+                $http.post(
+                    ApiEndpoint.url + "/plan/change-plan", { plan_id: stripe_id, userid: $scope.user.id }
                 ).success(function(data, status, header) {
                     $ionicLoading.hide();
                     if (status == 200) {
@@ -264,7 +299,7 @@ controllers.profileCtrl = function(
                             title: 'Change plan success!',
                             template: data.message
                         });
-                            $scope.init();
+                        $scope.init();
                     } else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Change plan failed!',
