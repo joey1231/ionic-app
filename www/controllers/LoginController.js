@@ -31,6 +31,7 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
             title: 'Signup',
             template: "Please Signup on SMSVOIP website <br/> https://staging.smsvoip.nscook.net/register"
         });
+         $state.go('purchasenumber');
     }
     
 }
