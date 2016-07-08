@@ -11,36 +11,36 @@
         <ion-list id="setting-list4" class=" ">
             <ion-item class="item-divider " id="setting-list-item-divider4">Phone Settings</ion-item>
             <!--<ion-item class="item item-icon-right" >Phone WebRTC  <i class="icon assertive ion-close-circled"  ng-if="profile.phone_webrtc_enabled!=1"></i> <i class="icon ion-checkmark-circled balanced" ng-if="profile.phone_webrtc_enabled==1"></i> </ion-item>-->
-             <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.phone_webrtc_enabled" >Phone WebRTC</ion-toggle>
-             <ion-radio ng-model="profile.route_incoming_call" ng-value="1">Ring the devices enabled above</ion-radio>
-             <ion-radio ng-model="profile.route_incoming_call" ng-value="2">Send incoming calls to voicemail</ion-radio>
-             <ion-radio ng-model="profile.route_incoming_call" ng-value="3">Disable incoming calls</ion-radio>
-            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.transcribe_voicemail" >Transcribe voicemail</ion-toggle>
+             <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.phone_webrtc_enabled" ng-change="updatAttribute('phone_webrtc_enabled')">Phone WebRTC</ion-toggle>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="1" ng-change="updatAttribute('route_incoming_call')">Ring the devices enabled above</ion-radio>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="2" ng-change="updatAttribute('route_incoming_call')">Send incoming calls to voicemail</ion-radio>
+             <ion-radio ng-model="profile.route_incoming_call" ng-value="3" ng-change="updatAttribute('route_incoming_call')">Disable incoming calls</ion-radio>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.transcribe_voicemail" ng-change="updatAttribute('transcribe_voicemail')" >Transcribe voicemail</ion-toggle>
            
 
         </ion-list>
         <div class="spacer" style="width: 300px; height: 23px;"></div>
         <ion-list id="setting-list5" class=" ">
             <ion-item class="item-divider " id="setting-list-item-divider5">Message Settings</ion-item>
-            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.forward_incoming_message" >Forward Incoming</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.forward_incoming_message" ng-change="updatAttribute('forward_incoming_message')">Forward Incoming</ion-toggle>
            
-           <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.sound_notification" >Enable Sound Notifications</ion-toggle>
+           <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.sound_notification" ng-change="updatAttribute('sound_notification')">Enable Sound Notifications</ion-toggle>
 
-            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.desktop_notification" >Enable desktop notifications for this computer</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.desktop_notification" ng-change="updatAttribute('desktop_notification')">Enable desktop notifications for this computer</ion-toggle>
 
-            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.hide_link_bulk_message" >Hide Link in Bulk Messages</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.hide_link_bulk_message" ng-change="updatAttribute('hide_link_bulk_message')">Hide Link in Bulk Messages</ion-toggle>
 
            
 
             <label class="item item-input " id="setting-textarea3">
-                <span class="input-label">Signature</span><textarea placeholder=""  ng-model="profile.message_signature"></textarea>
+                <span class="input-label">Signature</span><textarea placeholder=""  ng-model="profile.message_signature" ng-change="updatAttribute('message_signature')"></textarea>
             </label>
             
-            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="proccessToggle.disable_incoming_message" >Disable Incoming Messages</ion-toggle>
+            <ion-toggle toggle-class="toggle-positive" id="newContact-toggle10" class=" " ng-model="toggle_setting.disable_incoming_message" ng-change="updatAttribute('disable_incoming_message')" >Disable Incoming Messages</ion-toggle>
          
 
             <label class="item item-input " id="setting-textarea4">
-                <span class="input-label">Auto-Response</span><textarea placeholder=""  ng-model="profile.auto_response_message"></textarea>
+                <span class="input-label">Auto-Response</span><textarea placeholder=""  ng-model="profile.auto_response_message" ng-change="updatAttribute('auto_response_message')"></textarea>
             </label>
 
 
