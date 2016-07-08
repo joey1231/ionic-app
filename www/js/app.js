@@ -21,7 +21,7 @@ var app = angular.module('app', [
         // url: 'http://localhost:8100/ionic',
         url: 'http://159.203.201.53/ionic',
         baseUrl:'http://159.203.201.53',
-      registration: 'http://localhost:8100/register'
+        registration: 'http://localhost:8100/register'
     })
     .constant('ScaleDronePush', {
         channel_id: 'Not4yRVrFtQgNuDL'

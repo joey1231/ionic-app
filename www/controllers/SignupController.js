@@ -1,4 +1,4 @@
-controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state) {
+controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state, $ionicPopup) {
 
   // declare scope register object
   $scope.registration = {};
@@ -16,7 +16,11 @@ controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state
         $state.go('login')
       })
       .error(function(error){
-        $cordovaToast.show('Registration failed: ' + error.message, 'short','center')
+        //$cordovaToast.show('Registration failed: ' + error.message, 'short','center')
+        $ionicPopup.alert({
+          title:'Registration Failed',
+          template: error.message
+        });
       })
 
   }
