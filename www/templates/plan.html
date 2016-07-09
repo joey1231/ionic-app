@@ -1,0 +1,62 @@
+<ion-content padding="true" ng-init="init()">
+  <div class="bar bar-header">
+    <h1 class="title">Choose Plan</h1>
+  </div>
+  <div class="list card" ng-repeat="plan in plans">
+      <div class="item item-divider item-avatar item-icon-right">
+        <i class="icon ion-ios-telephone balanced"></i>
+        <h2>plan.stripe_name</h2>
+        <p>plan.price</p>
+      </div>
+      <div class="item item-body">
+          <div class="item item avatar item-icon-right">
+            <i class="icon ion-checkmark-circled balanced"></i>
+            <p>Phone Number</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon balanced">{{ plan.sms_count }}</i>
+            <p>SMS Per Month</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon balanced">{{ plan.minutes_count }}</i>
+            <p>Minutes Call Per Month</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon balanced">{{ plan.max_recipients }}</i>
+            <p>Max Recipients Per SMS</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.mms_enabled==1"> </i>
+            <i class="icon assertive ion-close-circled"  ng-if="plan.mms_enabled==0"></i>
+            <p>MMS</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.voicemail_enabled==1"> </i>
+            <i class="icon assertive ion-close-circled"  ng-if="plan.voicemail_enabled==0"></i>
+            <p>Voice Mail</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.api_enabled==1"> </i>
+            <i class="icon assertive ion-close-circled"  ng-if="plan.api_enabled==0"></i>
+            <p>API Integrations</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.conference_enabled==1"> </i>
+            <i class="icon assertive ion-close-circled"  ng-if="plan.conference_enabled==0"></i>
+            <p>Conference</p>
+          </div>
+          <div class="item item avatar item-icon-right">
+            <i class="icon  ion-checkmark-circled  balanced" ng-if="plan.support_enabled==1"> </i>
+            <i class="icon assertive ion-close-circled"  ng-if="plan.support_enabled==0"></i>
+            <p>Custom Setup and Training</p>
+          </div>
+      </div>
+    <div class="item item-divider">
+      <div>
+        <button class="button button-balanced">
+          Choose Plan
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

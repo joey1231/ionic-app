@@ -1,5 +1,9 @@
-controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state, $ionicPopup) {
-
+controllers.signupCtrl = function(
+  $scope, 
+  RegisterService, 
+  $cordovaToast, 
+  $state, 
+  $ionicPopup) {
   // declare scope register object
   $scope.registration = {};
 
@@ -21,7 +25,8 @@ controllers.signupCtrl = function($scope, RegisterService, $cordovaToast, $state
           console.log(data.errors);
           //$cordovaToast.show('Registration failed: ' + error.message, 'short','center')
         } else if (status == 200) {
-          //$state.go('changeplan');
+          //$state.go('plans');
+          // todo pass data for choose plan logic (user object)
           console.log('no error');
         }
       })

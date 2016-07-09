@@ -144,6 +144,11 @@ angular.module('app.routes', [])
                 controller: 'contactsCtrl'
 
             })
+          .state('plans', {
+            url:'', // todo determine the url
+            templateUrl: 'templates/plans.html',
+            controller: 'plansCtrl'
+          })
         $urlRouterProvider.otherwise('/login')
 
 
