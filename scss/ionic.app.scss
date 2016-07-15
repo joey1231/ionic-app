@@ -30,5 +30,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include messaging specific scss
 @import "messaging.app.scss";
 
+// Include profile specific scss
+@import "profile.app.scss";
+
 // Include style specific scss
 @import "style.app.scss";

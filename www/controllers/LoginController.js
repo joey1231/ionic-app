@@ -10,7 +10,16 @@ controllers.loginCtrl = function($scope, $http, ApiEndpoint, $timeout, $q, $ioni
         'save': false
     };
     $scope.login = function() {
-        LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data) {
+        LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data, status, header) {
+            if (status == 202) {
+                if (data.not_subscribe == true) {
+                    // go to choose plan
+                }
+
+                if (data.not_complete == true) {
+                    // go to buy number
+                }
+            }
             $state.go('tabsController.inbox');
         }).error(function(data) {
 
